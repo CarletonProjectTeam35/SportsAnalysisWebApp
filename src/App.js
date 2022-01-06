@@ -7,14 +7,12 @@ import Emg from "./pages/Emg";
 import Gyro from "./pages/Gyro";
 import PressurePlate from "./pages/Pressure-plate";
 import DataHistory from "./pages/Data-history";
-import Gauge from "./components/Gauge/Gauge";
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Navbar />
-        <Gauge />
         <div className="content">
           <Routes>
             <Route exact path="/" element={<Overview />}></Route>
