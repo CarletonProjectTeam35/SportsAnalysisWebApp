@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { MenuItems } from "./MenuItems";
 import "./Navbar.css";
+import SwitchHockey from "../Switch";
+import DropdownBar from "../Dropdown";
 
 class Navbar extends Component {
   state = { clicked: false };
@@ -8,11 +10,19 @@ class Navbar extends Component {
   handleClick = () => {
     this.setState({ clicked: !this.state.clicked });
   };
+  onChange = (item, name) => {
+    console.log(item, name);
+    localStorage.setItem("Participant", item.value);
+  };
 
   render() {
     return (
       <nav className="NavbarItems">
-        <div> Switch</div>
+        <div className="current-participant">
+          {" "}
+          Current Participant: <DropdownBar />
+        </div>
+        <SwitchHockey />
         <div className="menu-icon" onClick={this.handleClick}>
           <i
             className={this.state.clicked ? "fas fa-times" : "fas fa-bars"}
