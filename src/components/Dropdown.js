@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Dropdown } from "reactjs-dropdown-component";
-
 class DropdownBar extends Component {
   constructor() {
     super();

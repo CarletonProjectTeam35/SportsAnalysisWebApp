@@ -9,7 +9,7 @@ class SwitchHockey extends Component {
   }
 
   componentDidMount() {
-    const storedValue = localStorage.getItem("Mode");
+    const storedValue = localStorage.getItem("SwitchMode");
     if (storedValue == "Shooting") {
       this.setState({ checked: true });
     } else if (storedValue == "Skating") {
@@ -20,9 +20,9 @@ class SwitchHockey extends Component {
   handleChange(checked) {
     this.setState({ checked });
     if (checked) {
-      localStorage.setItem("Mode", "Shooting");
+      localStorage.setItem("SwitchMode", "Shooting");
     } else if (!checked) {
-      localStorage.setItem("Mode", "Skating");
+      localStorage.setItem("SwitchMode", "Skating");
     }
   }
 

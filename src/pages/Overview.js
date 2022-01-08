@@ -1,7 +1,11 @@
 import React from "react";
-
+import RecordButton from "../components/RecordButton";
 const Overview = () => {
-  return <div>hi from overview page</div>;
+  return (
+    <div>
+      <RecordButton />
+    </div>
+  );
 };
 
 export default Overview;

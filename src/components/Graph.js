@@ -1,18 +1,33 @@
 import React, { Component } from "react";
 import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
-import faker from "faker";
 class DataGraph extends Component {
+  //Right now it only gets the data when this component is present but we might want to do it all the time
+  constructor(props) {
+    super(props);
+    this.state = { graphData: [], graphTime: [] };
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(() => {
+      this.setState({ graphData: JSON.parse(localStorage.getItem("EmgData")) });
+      this.setState({
+        graphTime: JSON.parse(localStorage.getItem("EmgTime")),
+      });
+      console.log(this.state.graphData);
+      console.log(this.state.graphTime);
+    }, 4000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
   render() {
-    const labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+    const labels = this.state.graphTime;
     return (
       <Line
         options={{
-          xAxis: {
-            // The axis for this scale is determined from the first letter of the id as `'x'`
-            // It is recommended to specify `position` and / or `axis` explicitly.
-            type: "time",
-          },
           responsive: true,
           plugins: {
             legend: {
@@ -27,51 +42,41 @@ class DataGraph extends Component {
         data={{
           labels,
           datasets: [
+            //Do a for loop for the amount of datasets there are
+            //Add a clear button on the opposite side of the record mode button
             {
-              label: "Emg Sensor 1",
-              data: labels.map(() =>
-                faker.datatype.number({ min: -1000, max: 1000 })
-              ),
+              label: "Emg Sensor 1", //Prop
+              data: this.state.graphData,
               borderColor: "rgb(255, 99, 132)",
               backgroundColor: "rgb(255, 99, 132)",
             },
             {
-              label: "Emg Sensor 2",
-              data: labels.map(() =>
-                faker.datatype.number({ min: -1000, max: 1000 })
-              ),
+              label: "Emg Sensor 2", //Prop
+              data: this.state.graphData,
               borderColor: "rgb(53, 162, 235)",
               backgroundColor: "rgb(53, 162, 235)",
             },
             {
               label: "Emg Sensor 3",
-              data: labels.map(() =>
-                faker.datatype.number({ min: -1000, max: 1000 })
-              ),
+              data: this.state.graphData,
               borderColor: "rgb(50,205,50)",
               backgroundColor: "rgb(50,205,50)",
             },
             {
               label: "Emg Sensor 4",
-              data: labels.map(() =>
-                faker.datatype.number({ min: -1000, max: 1000 })
-              ),
+              data: this.state.graphData,
               borderColor: "rgb(252, 118, 5 )",
               backgroundColor: "rgba(252, 118, 5 )",
             },
             {
               label: "Emg Sensor 5",
-              data: labels.map(() =>
-                faker.datatype.number({ min: -1000, max: 1000 })
-              ),
+              data: this.state.graphData,
               borderColor: "rgb(187, 51, 255)",
               backgroundColor: "rgba(187, 51, 255)",
             },
             {
               label: "Emg Sensor 6",
-              data: labels.map(() =>
-                faker.datatype.number({ min: -1000, max: 1000 })
-              ),
+              data: this.state.graphData,
               borderColor: "rgb(223, 255, 0)",
               backgroundColor: "rgba(223, 255, 0)",
             },

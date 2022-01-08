@@ -1,7 +1,13 @@
 import React from "react";
+import DataGraph from "../components/Graph";
 
 const Gyro = () => {
-  return <div>hi from Gyro page</div>;
+  return (
+    <div>
+      {" "}
+      <DataGraph />
+    </div>
+  );
 };
 
 export default Gyro;
