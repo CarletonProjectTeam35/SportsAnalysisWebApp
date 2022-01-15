@@ -5,7 +5,7 @@ export const MenuItems = [
     cName: "nav-links",
   },
   {
-    title: "Emg",
+    title: "EMG",
     url: "/emg",
     cName: "nav-links",
   },
@@ -15,12 +15,12 @@ export const MenuItems = [
     cName: "nav-links",
   },
   {
-    title: "Pressure-plate",
+    title: "Pressure Plate",
     url: "/pressure-plate",
     cName: "nav-links",
   },
   {
-    title: "Data-history",
+    title: "Data History",
     url: "/data-history",
     cName: "nav-links",
   },

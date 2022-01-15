@@ -5,17 +5,67 @@ class DataGraph extends Component {
   //Right now it only gets the data when this component is present but we might want to do it all the time
   constructor(props) {
     super(props);
-    this.state = { graphData: [], graphTime: [] };
+
+    this.state = {
+      graphData0: [],
+      graphData1: [],
+      graphData2: [],
+      graphData3: [],
+      graphData4: [],
+      graphData5: [],
+      graphTime: [],
+      graphTitle: this.props.graphTitle,
+      sensors: this.props.sensors,
+    };
   }
 
   componentDidMount() {
     this.interval = setInterval(() => {
-      this.setState({ graphData: JSON.parse(localStorage.getItem("EmgData")) });
-      this.setState({
-        graphTime: JSON.parse(localStorage.getItem("EmgTime")),
-      });
-      console.log(this.state.graphData);
-      console.log(this.state.graphTime);
+      if (window.location.pathname == "/emg") {
+        this.setState({
+          graphData0: JSON.parse(localStorage.getItem("EmgData0")),
+        });
+        this.setState({
+          graphData1: JSON.parse(localStorage.getItem("EmgData0")),
+        });
+        this.setState({
+          graphData2: JSON.parse(localStorage.getItem("EmgData2")),
+        });
+
+        this.setState({
+          graphData3: JSON.parse(localStorage.getItem("EmgData3")),
+        });
+
+        this.setState({
+          graphData4: JSON.parse(localStorage.getItem("EmgData4")),
+        });
+
+        this.setState({
+          graphData5: JSON.parse(localStorage.getItem("EmgData5")),
+        });
+        this.setState({
+          graphTime: JSON.parse(localStorage.getItem("EmgTime")),
+        });
+      }
+      if (window.location.pathname == "/gyro") {
+        this.setState({
+          graphData0: JSON.parse(localStorage.getItem("GyroData")),
+        });
+        this.setState({
+          graphTime: JSON.parse(localStorage.getItem("GyroTime")),
+        });
+      }
+      if (window.location.pathname == "/pressure-plate") {
+        this.setState({
+          graphData0: JSON.parse(localStorage.getItem("PressureData0")),
+        });
+        this.setState({
+          graphData1: JSON.parse(localStorage.getItem("PressureData1")),
+        });
+        this.setState({
+          graphTime: JSON.parse(localStorage.getItem("PressureTime")),
+        });
+      }
     }, 4000);
   }
 
@@ -24,6 +74,33 @@ class DataGraph extends Component {
   }
 
   render() {
+    const colours = [
+      "rgb(255, 99, 132)",
+      "rgb(53, 162, 235)",
+      "rgb(50,205,50)",
+      "rgb(252, 118, 5 )",
+      "rgb(187, 51, 255)",
+      "rgb(223, 255, 0)",
+    ];
+    const data = [];
+    const titles = [
+      this.state.graphData0,
+      this.state.graphData1,
+      this.state.graphData2,
+      this.state.graphData3,
+      this.state.graphData4,
+      this.state.graphData5,
+    ];
+
+    for (const sensor in this.state.sensors) {
+      data.push({
+        label: this.state.sensors[sensor],
+        data: titles[sensor],
+        borderColor: colours[sensor],
+        backgroundColor: colours[sensor],
+      });
+    }
+
     const labels = this.state.graphTime;
     return (
       <Line
@@ -35,52 +112,13 @@ class DataGraph extends Component {
             },
             title: {
               display: true,
-              text: "EMG Sensors",
+              text: this.state.graphTitle,
             },
           },
         }}
         data={{
           labels,
-          datasets: [
-            //Do a for loop for the amount of datasets there are
-            //Add a clear button on the opposite side of the record mode button
-            {
-              label: "Emg Sensor 1", //Prop
-              data: this.state.graphData,
-              borderColor: "rgb(255, 99, 132)",
-              backgroundColor: "rgb(255, 99, 132)",
-            },
-            {
-              label: "Emg Sensor 2", //Prop
-              data: this.state.graphData,
-              borderColor: "rgb(53, 162, 235)",
-              backgroundColor: "rgb(53, 162, 235)",
-            },
-            {
-              label: "Emg Sensor 3",
-              data: this.state.graphData,
-              borderColor: "rgb(50,205,50)",
-              backgroundColor: "rgb(50,205,50)",
-            },
-            {
-              label: "Emg Sensor 4",
-              data: this.state.graphData,
-              borderColor: "rgb(252, 118, 5 )",
-              backgroundColor: "rgba(252, 118, 5 )",
-            },
-            {
-              label: "Emg Sensor 5",
-              data: this.state.graphData,
-              borderColor: "rgb(187, 51, 255)",
-              backgroundColor: "rgba(187, 51, 255)",
-            },
-            {
-              label: "Emg Sensor 6",
-              data: this.state.graphData,
-              borderColor: "rgb(223, 255, 0)",
-              backgroundColor: "rgba(223, 255, 0)",
-            },
-          ],
+          datasets: data,
         }}
         height={100}
         width={600}

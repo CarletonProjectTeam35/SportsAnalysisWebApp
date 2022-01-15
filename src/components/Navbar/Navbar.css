@@ -54,12 +54,7 @@
   text-align: center;
   color: #fff;
 }
-.switch {
-  left: 0;
-  position: absolute;
-  text-align: center;
-  padding-left: 1rem;
-}
+
 .dropdown {
   color: black;
   height: 10px;
