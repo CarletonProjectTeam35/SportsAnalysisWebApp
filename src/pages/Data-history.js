@@ -1,7 +1,11 @@
 import React from "react";
-
+import GridExample from "../components/Grid";
 const DataHistory = () => {
-  return <div>hi from data history page</div>;
+  return (
+    <div>
+      <GridExample />
+    </div>
+  );
 };
 
 export default DataHistory;

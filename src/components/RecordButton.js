@@ -23,13 +23,6 @@ class RecordButton extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
-    db.collection("Emg").add({
-      mode: "Skating",
-      type: "Off-ice",
-      participant: "Braden",
-      emgData0: "55",
-      emgData1: "100",
-    });
     console.log(
       db
         .collection("Emg")
@@ -75,18 +68,6 @@ class RecordButton extends Component {
       this.setState({
         dataTimeEmg: JSON.parse(localStorage.getItem("EmgTime")),
       });
-      db.collection("Emg").add({
-        switchModeHockey: localStorage.getItem("SwitchModeHockey"),
-        switchModeTraining: localStorage.getItem("SwitchModeTraining"),
-        participant: localStorage.getItem("Participant"),
-        emgData0: JSON.parse(localStorage.getItem("EmgData0")),
-        emgData1: JSON.parse(localStorage.getItem("EmgData1")),
-        emgData2: JSON.parse(localStorage.getItem("EmgData2")),
-        emgData3: JSON.parse(localStorage.getItem("EmgData3")),
-        emgData4: JSON.parse(localStorage.getItem("EmgData4")),
-        emgData5: JSON.parse(localStorage.getItem("EmgData5")),
-        emgTime: JSON.parse(localStorage.getItem("EmgTime")),
-      });
     }
     if (localStorage.getItem("GyroData") != null) {
       this.setState({
@@ -94,13 +75,6 @@ class RecordButton extends Component {
       });
       this.setState({
         dataTimeGyro: JSON.parse(localStorage.getItem("GyroTime")),
-      });
-      db.collection("Gyro").add({
-        switchModeHockey: localStorage.getItem("SwitchModeHockey"),
-        switchModeTraining: localStorage.getItem("SwitchModeTraining"),
-        participant: localStorage.getItem("Participant"),
-        gyroData: JSON.parse(localStorage.getItem("GyroData")),
-        gyroTime: JSON.parse(localStorage.getItem("GyroTime")),
       });
     }
     if (localStorage.getItem("PressureData0") != null) {
@@ -112,14 +86,6 @@ class RecordButton extends Component {
       });
       this.setState({
         dataTimePressure: JSON.parse(localStorage.getItem("PressureTime")),
-      });
-      db.collection("Pressure").add({
-        switchModeHockey: localStorage.getItem("SwitchModeHockey"),
-        switchModeTraining: localStorage.getItem("SwitchModeTraining"),
-        participant: localStorage.getItem("Participant"),
-        pressureData0: JSON.parse(localStorage.getItem("PressureData0")),
-        pressureData1: JSON.parse(localStorage.getItem("PressureData1")),
-        pressureTime: JSON.parse(localStorage.getItem("PressureTime")),
       });
     }
     if (localStorage.getItem("DataCleared") == 1) {
@@ -227,6 +193,7 @@ class RecordButton extends Component {
           "GyroTime",
           JSON.stringify(this.state.dataTimeGyro)
         );
+
         fetch(
           "https://api.thingspeak.com/channels/1632733/feeds.json?api_key=FOE9M635EZ00Q5H1&results=1"
         )
@@ -270,13 +237,34 @@ class RecordButton extends Component {
     } else if (!checked) {
       localStorage.setItem("RecordMode", "NotRecording");
       clearInterval(this.interval);
+      db.collection("Emg").add({
+        switchModeHockey: localStorage.getItem("SwitchModeHockey"),
+        switchModeTraining: localStorage.getItem("SwitchModeTraining"),
+        participant: localStorage.getItem("Participant"),
+        emgData0: JSON.parse(localStorage.getItem("EmgData0")),
+        emgData1: JSON.parse(localStorage.getItem("EmgData1")),
+        emgData2: JSON.parse(localStorage.getItem("EmgData2")),
+        emgData3: JSON.parse(localStorage.getItem("EmgData3")),
+        emgData4: JSON.parse(localStorage.getItem("EmgData4")),
+        emgData5: JSON.parse(localStorage.getItem("EmgData5")),
+        emgTime: JSON.parse(localStorage.getItem("EmgTime")),
+      });
+      db.collection("Gyro").add({
+        switchModeHockey: localStorage.getItem("SwitchModeHockey"),
+        switchModeTraining: localStorage.getItem("SwitchModeTraining"),
+        participant: localStorage.getItem("Participant"),
+        gyroData: JSON.parse(localStorage.getItem("GyroData")),
+        gyroTime: JSON.parse(localStorage.getItem("GyroTime")),
+      });
+      db.collection("Pressure").add({
+        switchModeHockey: localStorage.getItem("SwitchModeHockey"),
+        switchModeTraining: localStorage.getItem("SwitchModeTraining"),
+        participant: localStorage.getItem("Participant"),
+        pressureData0: JSON.parse(localStorage.getItem("PressureData0")),
+        pressureData1: JSON.parse(localStorage.getItem("PressureData1")),
+        pressureTime: JSON.parse(localStorage.getItem("PressureTime")),
+      });
     }
-  }
-  fetchData(url) {
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => data.feeds)
-      .then((newData) => {});
   }
 
   render() {
