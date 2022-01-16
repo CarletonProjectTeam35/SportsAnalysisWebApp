@@ -1,26 +1,27 @@
-import { RadialGauge, RadialGaugeSeries } from "reaviz";
-
-const data = [
-  { key: "Speed", data: 40 },
-  { key: "EMG 1", data: 20 },
-  { key: "EMG 2", data: 14 },
-  { key: "EMG 3", data: 19 },
-  { key: "EMG 4", data: 30 },
-  { key: "EMG 5", data: 47 },
-  { key: "EMG 6", data: 75 },
-  { key: "Pressure Plate Left", data: 25 },
-  { key: "Pressure Plate Right", data: 25 },
-];
+import React from "react";
+import RecordButton from "../components/RecordButton";
+import ClearButton from "../components/ClearButton/ClearButton";
+import DropdownDrills from "../components/DropdownDrills/DropdownDrills";
+import HockeySwitch from "../components/HockeySwitch/HockeySwitch";
+import DropdownNames from "../components/DropdownNames/DropdownNames";
+import TypeSwitch from "../components/TypeSwitch/TypeSwitch";
 const Overview = () => {
   return (
     <div>
-      hi from overview page
-      <RadialGauge
-        width={800}
-        height={450}
-        data={data}
-        series={<RadialGaugeSeries minGaugeWidth={150} />}
-      />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-around",
+        }}
+      >
+        <TypeSwitch />
+        <HockeySwitch />
+        <DropdownNames />
+        <DropdownDrills />
+        <RecordButton />
+        <ClearButton />
+      </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Switch from "react-switch";
-
-class SwitchHockey extends Component {
+import "./TypeSwitch.css";
+class TypeSwitch extends Component {
   constructor() {
     super();
     this.state = { checked: false };
@@ -9,10 +9,10 @@ class SwitchHockey extends Component {
   }
 
   componentDidMount() {
-    const storedValue = localStorage.getItem("Mode");
-    if (storedValue == "Shooting") {
+    const storedValue = localStorage.getItem("SwitchModeTraining");
+    if (storedValue == "OffIce") {
       this.setState({ checked: true });
-    } else if (storedValue == "Skating") {
+    } else if (storedValue == "OnIce") {
       this.setState({ checked: false });
     }
   }
@@ -20,9 +20,9 @@ class SwitchHockey extends Component {
   handleChange(checked) {
     this.setState({ checked });
     if (checked) {
-      localStorage.setItem("Mode", "Shooting");
+      localStorage.setItem("SwitchModeTraining", "OffIce");
     } else if (!checked) {
-      localStorage.setItem("Mode", "Skating");
+      localStorage.setItem("SwitchModeTraining", "OnIce");
     }
   }
 
@@ -51,10 +51,9 @@ class SwitchHockey extends Component {
                 fontSize: 12,
                 fontWeight: 1000,
                 color: "black",
-                paddingRight: 2,
               }}
             >
-              Skating
+              On Ice
             </div>
           }
           checkedIcon={
@@ -71,7 +70,7 @@ class SwitchHockey extends Component {
                 paddingRight: 2,
               }}
             >
-              Shooting
+              Off Ice
             </div>
           }
           className="react-switch"
@@ -81,4 +80,4 @@ class SwitchHockey extends Component {
     );
   }
 }
-export default SwitchHockey;
+export default TypeSwitch;

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Dropdown } from "reactjs-dropdown-component";
-
-class DropdownBar extends Component {
+import "./DropdownNames.css";
+class DropdownNames extends Component {
   constructor() {
     super();
     this.state = {
@@ -42,18 +42,21 @@ class DropdownBar extends Component {
       },
     ];
     return (
-      <Dropdown
-        name="participants"
-        title={this.state.currentParticipant}
-        list={participants}
-        onChange={this.onChange}
-        styles={{
-          headerTitle: { color: "black", fontWeight: 1000 },
-          listItem: { color: "black" },
-        }}
-      />
+      <div className="dropdownNames">
+        Choose a Participant:
+        <Dropdown
+          name="participants"
+          title={this.state.currentParticipant}
+          list={participants}
+          onChange={this.onChange}
+          styles={{
+            headerTitle: { color: "black", fontWeight: 1000 },
+            listItem: { color: "black" },
+          }}
+        />
+      </div>
     );
   }
 }
 
-export default DropdownBar;
+export default DropdownNames;
