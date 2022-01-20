@@ -6,6 +6,7 @@ import DropdownDrills from "../components/DropdownDrills/DropdownDrills";
 import DropdownNames from "../components/DropdownNames/DropdownNames";
 import HockeySwitch from "../components/HockeySwitch/HockeySwitch";
 import TypeSwitch from "../components/TypeSwitch/TypeSwitch";
+import DataTable from "../components/DataTable/DataTable";
 const Emg = () => {
   return (
     <div>
@@ -34,6 +35,20 @@ const Emg = () => {
           "EMG sensor 6",
         ]}
       />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-around",
+        }}
+      >
+        <DataTable sensor="EMG sensor 1" />
+        <DataTable sensor="EMG sensor 2" />
+        <DataTable sensor="EMG sensor 3" />
+        <DataTable sensor="EMG sensor 4" />
+        <DataTable sensor="EMG sensor 5" />
+        <DataTable sensor="EMG sensor 6" />
+      </div>
     </div>
   );
 };

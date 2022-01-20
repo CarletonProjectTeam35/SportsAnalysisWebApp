@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
-class DataGraph extends Component {
+import { db } from "../firebase";
+class SingleGraph extends Component {
   //Right now it only gets the data when this component is present but we might want to do it all the time
   constructor(props) {
     super(props);
@@ -16,63 +17,61 @@ class DataGraph extends Component {
       graphTime: [],
       graphTitle: this.props.graphTitle,
       sensors: this.props.sensors,
+      graphType: this.props.graphType,
     };
   }
-
   componentDidMount() {
-    this.interval = setInterval(() => {
-      if (window.location.pathname == "/emg") {
-        this.setState({
-          graphData0: JSON.parse(localStorage.getItem("EmgData0")),
-        });
-        this.setState({
-          graphData1: JSON.parse(localStorage.getItem("EmgData1")),
-        });
-        this.setState({
-          graphData2: JSON.parse(localStorage.getItem("EmgData2")),
-        });
-
-        this.setState({
-          graphData3: JSON.parse(localStorage.getItem("EmgData3")),
-        });
-
-        this.setState({
-          graphData4: JSON.parse(localStorage.getItem("EmgData4")),
-        });
-
-        this.setState({
-          graphData5: JSON.parse(localStorage.getItem("EmgData5")),
-        });
-        this.setState({
-          graphTime: JSON.parse(localStorage.getItem("EmgTime")),
-        });
-      }
-      if (window.location.pathname == "/gyro") {
-        this.setState({
-          graphData0: JSON.parse(localStorage.getItem("GyroData")),
-        });
-        this.setState({
-          graphTime: JSON.parse(localStorage.getItem("GyroTime")),
-        });
-      }
-      if (window.location.pathname == "/pressure-plate") {
-        this.setState({
-          graphData0: JSON.parse(localStorage.getItem("PressureData0")),
-        });
-        this.setState({
-          graphData1: JSON.parse(localStorage.getItem("PressureData1")),
-        });
-        this.setState({
-          graphTime: JSON.parse(localStorage.getItem("PressureTime")),
-        });
-      }
-    }, 4000);
+    db.collection("Data")
+      .doc(window.location.pathname.slice(14))
+      .get()
+      .then((DocumentSnapshot) => {
+        const data = DocumentSnapshot.data();
+        console.log(data);
+        if (this.state.graphType == "Emg") {
+          this.setState({
+            graphData0: data.data.EmgData.emg1,
+          });
+          this.setState({
+            graphData1: data.data.EmgData.emg2,
+          });
+          this.setState({
+            graphData2: data.data.EmgData.emg3,
+          });
+          this.setState({
+            graphData3: data.data.EmgData.emg4,
+          });
+          this.setState({
+            graphData4: data.data.EmgData.emg5,
+          });
+          this.setState({
+            graphData5: data.data.EmgData.emg6,
+          });
+          this.setState({
+            graphTime: data.data.EmgData.emgTime,
+          });
+          console.log(data.data.EmgData.emg1);
+        }
+        if (this.state.graphType == "Gyro") {
+          this.setState({
+            graphData0: data.data.GyroData.gyro,
+          });
+          this.setState({
+            graphTime: data.data.GyroData.gyroTime,
+          });
+        }
+        if (this.state.graphType == "Pressure") {
+          this.setState({
+            graphData0: data.data.PressureData.pressurePoint1,
+          });
+          this.setState({
+            graphData1: data.data.PressureData.pressurePoint2,
+          });
+          this.setState({
+            graphTime: data.data.PressureData.pressureTime,
+          });
+        }
+      });
   }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
   render() {
     const colours = [
       "rgb(255, 99, 132)",
@@ -91,7 +90,6 @@ class DataGraph extends Component {
       this.state.graphData4,
       this.state.graphData5,
     ];
-
     for (const sensor in this.state.sensors) {
       data.push({
         label: this.state.sensors[sensor],
@@ -100,7 +98,6 @@ class DataGraph extends Component {
         backgroundColor: colours[sensor],
       });
     }
-
     const labels = this.state.graphTime;
     return (
       <Line
@@ -120,8 +117,8 @@ class DataGraph extends Component {
           labels,
           datasets: data,
         }}
-        height={100}
-        width={600}
+        height={20}
+        width={200}
         scale={{
           myScale: {
             Xaxis: "r",
@@ -131,4 +128,4 @@ class DataGraph extends Component {
     );
   }
 }
-export default DataGraph;
+export default SingleGraph;

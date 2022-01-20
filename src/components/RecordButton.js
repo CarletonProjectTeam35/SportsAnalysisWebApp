@@ -26,9 +26,9 @@ class RecordButton extends Component {
     console.log(
       db
         .collection("Emg")
-        .where("mode", "==", "Skating")
-        .where("type", "==", "Off-ice")
-        .where("participant", "==", "Braden")
+        .where("mode", "===", "Skating")
+        .where("type", "===", "Off-ice")
+        .where("participant", "===", "Braden")
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((element) => {
@@ -37,10 +37,10 @@ class RecordButton extends Component {
         })
     );
     const storedValue = localStorage.getItem("RecordMode");
-    if (storedValue == "Recording") {
+    if (storedValue === "Recording") {
       this.setState({ checked: true });
       this.handleChange(true);
-    } else if (storedValue == "NotRecording") {
+    } else if (storedValue === "NotRecording") {
       this.setState({ checked: false });
     }
   }
@@ -88,7 +88,7 @@ class RecordButton extends Component {
         dataTimePressure: JSON.parse(localStorage.getItem("PressureTime")),
       });
     }
-    if (localStorage.getItem("DataCleared") == 1) {
+    if (localStorage.getItem("DataCleared") === 1) {
       localStorage.setItem("DataCleared", 0);
       this.setState({ dataPointEmg0: [] });
       this.setState({ dataPointEmg1: [] });
@@ -237,32 +237,31 @@ class RecordButton extends Component {
     } else if (!checked) {
       localStorage.setItem("RecordMode", "NotRecording");
       clearInterval(this.interval);
-      db.collection("Emg").add({
+      db.collection("Data").add({
         switchModeHockey: localStorage.getItem("SwitchModeHockey"),
         switchModeTraining: localStorage.getItem("SwitchModeTraining"),
+        drill: localStorage.getItem("Drill"),
         participant: localStorage.getItem("Participant"),
-        emgData0: JSON.parse(localStorage.getItem("EmgData0")),
-        emgData1: JSON.parse(localStorage.getItem("EmgData1")),
-        emgData2: JSON.parse(localStorage.getItem("EmgData2")),
-        emgData3: JSON.parse(localStorage.getItem("EmgData3")),
-        emgData4: JSON.parse(localStorage.getItem("EmgData4")),
-        emgData5: JSON.parse(localStorage.getItem("EmgData5")),
-        emgTime: JSON.parse(localStorage.getItem("EmgTime")),
-      });
-      db.collection("Gyro").add({
-        switchModeHockey: localStorage.getItem("SwitchModeHockey"),
-        switchModeTraining: localStorage.getItem("SwitchModeTraining"),
-        participant: localStorage.getItem("Participant"),
-        gyroData: JSON.parse(localStorage.getItem("GyroData")),
-        gyroTime: JSON.parse(localStorage.getItem("GyroTime")),
-      });
-      db.collection("Pressure").add({
-        switchModeHockey: localStorage.getItem("SwitchModeHockey"),
-        switchModeTraining: localStorage.getItem("SwitchModeTraining"),
-        participant: localStorage.getItem("Participant"),
-        pressureData0: JSON.parse(localStorage.getItem("PressureData0")),
-        pressureData1: JSON.parse(localStorage.getItem("PressureData1")),
-        pressureTime: JSON.parse(localStorage.getItem("PressureTime")),
+        data: {
+          EmgData: {
+            emg1: JSON.parse(localStorage.getItem("EmgData0")),
+            emg2: JSON.parse(localStorage.getItem("EmgData1")),
+            emg3: JSON.parse(localStorage.getItem("EmgData2")),
+            emg4: JSON.parse(localStorage.getItem("EmgData3")),
+            emg5: JSON.parse(localStorage.getItem("EmgData4")),
+            emg6: JSON.parse(localStorage.getItem("EmgData5")),
+            emgTime: JSON.parse(localStorage.getItem("EmgTime")),
+          },
+          GyroData: {
+            gyro: JSON.parse(localStorage.getItem("GyroData")),
+            gyroTime: JSON.parse(localStorage.getItem("GyroTime")),
+          },
+          PressureData: {
+            pressurePoint1: JSON.parse(localStorage.getItem("PressureData0")),
+            pressurePoint2: JSON.parse(localStorage.getItem("PressureTime")),
+            pressureTime: JSON.parse(localStorage.getItem("PressureTime")),
+          },
+        },
       });
     }
   }
@@ -274,7 +273,7 @@ class RecordButton extends Component {
           padding: 20,
         }}
       >
-        <h4>Record mode: </h4>
+        <h4 style={{ fontWeight: 500 }}>Record mode: </h4>
         <label htmlFor="material-switch">
           <Switch
             checked={this.state.checked}

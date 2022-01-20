@@ -1,9 +1,9 @@
 import React from "react";
-import GridExample from "../components/Grid";
+import DataGrid from "../components/Grid/Grid";
 const DataHistory = () => {
   return (
     <div>
-      <GridExample />
+      <DataGrid />
     </div>
   );
 };
