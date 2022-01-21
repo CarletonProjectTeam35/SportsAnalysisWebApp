@@ -7,6 +7,7 @@ import Emg from "./pages/Emg";
 import Gyro from "./pages/Gyro";
 import PressurePlate from "./pages/Pressure-plate";
 import DataHistory from "./pages/Data-history";
+import SingleDataHistory from "./pages/SingleDataHistory";
 
 function App() {
   return (
@@ -24,6 +25,11 @@ function App() {
               element={<PressurePlate />}
             ></Route>
             <Route exact path="/data-history" element={<DataHistory />}></Route>
+            <Route
+              exact
+              path="/data-history/:dataId"
+              element={<SingleDataHistory />}
+            ></Route>
           </Routes>
         </div>
       </div>

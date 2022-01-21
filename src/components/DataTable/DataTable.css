@@ -1,13 +1,17 @@
 .table-style {
-    min-width: 100%;
+  min-width: 100%;
 }
-
+.title {
+  text-align: center;
+  font-weight: 1000 !important;
+  border-style: ridge;
+}
 .header {
-    text-align: center;
-    font-size: 15px;
+  text-align: center;
+  font-size: 15px;
 }
 
 .cell-text {
-    text-align: center;
-    font-size: 15px;
+  text-align: center;
+  font-size: 15px;
 }

@@ -16,6 +16,10 @@ class Navbar extends Component {
   render() {
     return (
       <nav className="NavbarItems">
+        <h1 style={{ color: "white", paddingLeft: 10 }}>
+          {" "}
+          Hockey Data Analysis App
+        </h1>
         <div className="menu-icon" onClick={this.handleClick}>
           <i
             className={this.state.clicked ? "fas fa-times" : "fas fa-bars"}

@@ -1,7 +1,11 @@
 import React from "react";
-
+import DataGrid from "../components/Grid/Grid";
 const DataHistory = () => {
-  return <div>hi from data history page</div>;
+  return (
+    <div>
+      <DataGrid />
+    </div>
+  );
 };
 
 export default DataHistory;

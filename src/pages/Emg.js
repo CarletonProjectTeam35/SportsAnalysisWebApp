@@ -23,17 +23,31 @@ const Emg = () => {
         <RecordButton />
         <ClearButton />
       </div>
+
       <DataGraph
         graphTitle="EMG Sensors"
         sensors={[
-          "EMG sensor 1",
-          "EMG sensor 2",
-          "EMG sensor 3",
-          "EMG sensor 4",
-          "EMG sensor 5",
-          "EMG sensor 6",
+          "EMG sensor skating 1",
+          "EMG sensor skating 2",
+          "EMG sensor skating 3",
+          "EMG sensor skating 4",
+          "EMG sensor skating 5",
+          "EMG sensor skating 6",
+          "EMG sensor shooting 1",
+          "EMG sensor shooting 2",
+          "EMG sensor shooting 3",
+          "EMG sensor shooting 4",
+          "EMG sensor shooting 5",
+          "EMG sensor shooting 6",
         ]}
       />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-around",
+        }}
+      ></div>
     </div>
   );
 };
