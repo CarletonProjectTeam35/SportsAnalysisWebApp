@@ -7,15 +7,15 @@ class DataGauge extends Component {
     super(props);
 
     this.state = {
-      emgData0: [],
-      emgData1: [],
-      emgData2: [],
-      emgData3: [],
-      emgData4: [],
-      emgData5: [],
-      pressureData0: [],
-      pressureData1: [],
-      gyroData: [],
+      emgData0: 0,
+      emgData1: 0,
+      emgData2: 0,
+      emgData3: 0,
+      emgData4: 0,
+      emgData5: 0,
+      pressureData0: 0,
+      pressureData1: 0,
+      gyroData: 0,
     };
   }
 
@@ -23,31 +23,35 @@ class DataGauge extends Component {
     this.interval = setInterval(() => {
       if (localStorage.getItem("EmgData0") != null) {
         this.setState({
-          emgData0: JSON.parse(localStorage.getItem("EmgData0"))[0],
+          emgData0: parseInt(JSON.parse(localStorage.getItem("EmgData0"))[0]),
         });
         this.setState({
-          emgData1: JSON.parse(localStorage.getItem("EmgData1"))[0],
+          emgData1: parseInt(JSON.parse(localStorage.getItem("EmgData1"))[0]),
         });
         this.setState({
-          emgData2: JSON.parse(localStorage.getItem("EmgData2"))[0],
+          emgData2: parseInt(JSON.parse(localStorage.getItem("EmgData2"))[0]),
         });
         this.setState({
-          emgData3: JSON.parse(localStorage.getItem("EmgData3"))[0],
+          emgData3: parseInt(JSON.parse(localStorage.getItem("EmgData3"))[0]),
         });
         this.setState({
-          emgData4: JSON.parse(localStorage.getItem("EmgData4"))[0],
+          emgData4: parseInt(JSON.parse(localStorage.getItem("EmgData4"))[0]),
         });
         this.setState({
-          emgData5: JSON.parse(localStorage.getItem("EmgData5"))[0],
+          emgData5: parseInt(JSON.parse(localStorage.getItem("EmgData5"))[0]),
         });
         this.setState({
-          pressureData0: JSON.parse(localStorage.getItem("PressureData0"))[0],
+          pressureData0: parseInt(
+            JSON.parse(localStorage.getItem("PressureData0"))[0]
+          ),
         });
         this.setState({
-          pressureData1: JSON.parse(localStorage.getItem("PressureData1"))[0],
+          pressureData1: parseInt(
+            JSON.parse(localStorage.getItem("PressureData1"))[0]
+          ),
         });
         this.setState({
-          gyroData: JSON.parse(localStorage.getItem("GyroData"))[0],
+          gyroData: parseInt(JSON.parse(localStorage.getItem("GyroData"))[0]),
         });
       } else {
         this.setState({

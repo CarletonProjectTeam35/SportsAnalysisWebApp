@@ -26,9 +26,9 @@ class RecordButton extends Component {
     console.log(
       db
         .collection("Emg")
-        .where("mode", "===", "Skating")
-        .where("type", "===", "Off-ice")
-        .where("participant", "===", "Braden")
+        .where("mode", "==", "Skating")
+        .where("type", "==", "Off-ice")
+        .where("participant", "==", "Braden")
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((element) => {
@@ -273,7 +273,7 @@ class RecordButton extends Component {
           padding: 20,
         }}
       >
-        <h4 style={{ fontWeight: 500 }}>Record mode: </h4>
+        <h4>Record mode: </h4>
         <label htmlFor="material-switch">
           <Switch
             checked={this.state.checked}

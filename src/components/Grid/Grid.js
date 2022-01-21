@@ -12,11 +12,16 @@ class DataGrid extends Component {
       data: [],
       columnDefs: [
         {
-          headerName: "Participant",
-          field: "participant",
+          headerName: "Recording Id",
+          field: "recordingId",
           headerCheckboxSelection: true,
           headerCheckboxSelectionFilteredOnly: true,
           checkboxSelection: true,
+          sortable: true,
+          filter: true,
+        },
+        {
+          field: "participant",
           sortable: true,
           filter: true,
         },
@@ -77,7 +82,7 @@ class DataGrid extends Component {
           console.log(element.data());
           this.setState({
             data: this.state.data.concat({
-              id: element.id,
+              recordingId: element.id,
               participant: element.data().participant,
               hockeyMode: element.data().switchModeHockey,
               time: element.data().data.EmgData.emgTime[0],

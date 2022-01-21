@@ -15,6 +15,7 @@ class DataGraph extends Component {
       graphData5: [],
       graphTime: [],
       graphTitle: this.props.graphTitle,
+      labels: [],
       sensors: this.props.sensors,
     };
   }
@@ -22,6 +23,13 @@ class DataGraph extends Component {
   componentDidMount() {
     this.interval = setInterval(() => {
       if (window.location.pathname == "/emg") {
+        if (localStorage.getItem("SwitchModeHockey") === "Skating") {
+          this.setState({ labels: this.state.sensors.slice(0, 6) });
+          console.log(this.state.labels);
+        } else {
+          this.setState({ labels: this.state.sensors.slice(6, 12) });
+        }
+
         this.setState({
           graphData0: JSON.parse(localStorage.getItem("EmgData0")),
         });
@@ -92,9 +100,9 @@ class DataGraph extends Component {
       this.state.graphData5,
     ];
 
-    for (const sensor in this.state.sensors) {
+    for (const sensor in this.state.labels) {
       data.push({
-        label: this.state.sensors[sensor],
+        label: this.state.labels[sensor],
         data: titles[sensor],
         borderColor: colours[sensor],
         backgroundColor: colours[sensor],

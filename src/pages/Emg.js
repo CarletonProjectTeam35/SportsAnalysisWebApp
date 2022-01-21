@@ -6,7 +6,6 @@ import DropdownDrills from "../components/DropdownDrills/DropdownDrills";
 import DropdownNames from "../components/DropdownNames/DropdownNames";
 import HockeySwitch from "../components/HockeySwitch/HockeySwitch";
 import TypeSwitch from "../components/TypeSwitch/TypeSwitch";
-import DataTable from "../components/DataTable/DataTable";
 const Emg = () => {
   return (
     <div>
@@ -24,15 +23,22 @@ const Emg = () => {
         <RecordButton />
         <ClearButton />
       </div>
+
       <DataGraph
         graphTitle="EMG Sensors"
         sensors={[
-          "EMG sensor 1",
-          "EMG sensor 2",
-          "EMG sensor 3",
-          "EMG sensor 4",
-          "EMG sensor 5",
-          "EMG sensor 6",
+          "EMG sensor skating 1",
+          "EMG sensor skating 2",
+          "EMG sensor skating 3",
+          "EMG sensor skating 4",
+          "EMG sensor skating 5",
+          "EMG sensor skating 6",
+          "EMG sensor shooting 1",
+          "EMG sensor shooting 2",
+          "EMG sensor shooting 3",
+          "EMG sensor shooting 4",
+          "EMG sensor shooting 5",
+          "EMG sensor shooting 6",
         ]}
       />
       <div
@@ -41,14 +47,7 @@ const Emg = () => {
           flexDirection: "row",
           justifyContent: "space-around",
         }}
-      >
-        <DataTable sensor="EMG sensor 1" />
-        <DataTable sensor="EMG sensor 2" />
-        <DataTable sensor="EMG sensor 3" />
-        <DataTable sensor="EMG sensor 4" />
-        <DataTable sensor="EMG sensor 5" />
-        <DataTable sensor="EMG sensor 6" />
-      </div>
+      ></div>
     </div>
   );
 };
