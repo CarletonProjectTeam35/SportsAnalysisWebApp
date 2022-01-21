@@ -88,7 +88,7 @@ class RecordButton extends Component {
         dataTimePressure: JSON.parse(localStorage.getItem("PressureTime")),
       });
     }
-    if (localStorage.getItem("DataCleared") === 1) {
+    if (localStorage.getItem("DataCleared") == 1) {
       localStorage.setItem("DataCleared", 0);
       this.setState({ dataPointEmg0: [] });
       this.setState({ dataPointEmg1: [] });
