@@ -23,19 +23,6 @@ class RecordButton extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
-    console.log(
-      db
-        .collection("Emg")
-        .where("mode", "==", "Skating")
-        .where("type", "==", "Off-ice")
-        .where("participant", "==", "Braden")
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((element) => {
-            console.log(element.data());
-          });
-        })
-    );
     const storedValue = localStorage.getItem("RecordMode");
     if (storedValue === "Recording") {
       this.setState({ checked: true });

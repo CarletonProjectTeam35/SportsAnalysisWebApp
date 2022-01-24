@@ -67,25 +67,23 @@ class DataGrid extends Component {
     const selectedData = this.gridApi.getSelectedRows();
     const res = this.gridApi.applyTransaction({ remove: selectedData });
     res.remove.forEach(function (rowNode) {
-      console.log(rowNode.data.id);
-      db.collection("Data").doc(rowNode.data.id).delete();
+      db.collection("Data").doc(rowNode.data.recordingId).delete();
     });
   };
   rowClickHandler = (event) => {
-    window.location.href = `/data-history/${event.data.id}`;
+    window.location.href = `/data-history/${event.data.recordingId}`;
   };
   componentDidMount() {
     db.collection("Data")
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((element) => {
-          console.log(element.data());
           this.setState({
             data: this.state.data.concat({
               recordingId: element.id,
               participant: element.data().participant,
               hockeyMode: element.data().switchModeHockey,
-              time: element.data().data.EmgData.emgTime[0],
+              time: element.data().data.EmgData.emgTime,
               drill: element.data().drill,
               trainingMode: element.data().switchModeTraining,
               data: "Click here to see a data breakdown",
