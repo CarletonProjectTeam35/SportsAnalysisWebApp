@@ -6,6 +6,7 @@ import DropdownDrills from "../components/DropdownDrills/DropdownDrills";
 import DropdownNames from "../components/DropdownNames/DropdownNames";
 import HockeySwitch from "../components/HockeySwitch/HockeySwitch";
 import TypeSwitch from "../components/TypeSwitch/TypeSwitch";
+import DataTable2 from "../components/DataTable/DataTable2";
 
 const Gyro = () => {
   return (
@@ -15,6 +16,7 @@ const Gyro = () => {
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-around",
+          marginBottom: -50,
         }}
       >
         <TypeSwitch />
@@ -25,6 +27,17 @@ const Gyro = () => {
         <ClearButton />
       </div>
       <DataGraph graphTitle="Gyro Sensor" sensors={["Gyro Sensor"]} />
+      <hr />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          marginTop: 10,
+        }}
+      >
+        <DataTable2 sensor="GyroData" time="GyroTime" title="Gyro sensor" />
+      </div>
     </div>
   );
 };

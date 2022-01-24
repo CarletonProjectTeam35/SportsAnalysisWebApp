@@ -6,6 +6,7 @@ import DropdownDrills from "../components/DropdownDrills/DropdownDrills";
 import DropdownNames from "../components/DropdownNames/DropdownNames";
 import HockeySwitch from "../components/HockeySwitch/HockeySwitch";
 import TypeSwitch from "../components/TypeSwitch/TypeSwitch";
+import DataTable2 from "../components/DataTable/DataTable2";
 
 const PressurePlate = () => {
   return (
@@ -15,6 +16,7 @@ const PressurePlate = () => {
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-around",
+          marginBottom: -50,
         }}
       >
         <TypeSwitch />
@@ -28,6 +30,27 @@ const PressurePlate = () => {
         graphTitle="Pressure Plate Sensors"
         sensors={["Pressure Plate sensor 1", "Pressure Plate sensor 2"]}
       />
+      <hr />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+
+          marginTop: 10,
+        }}
+      >
+        <DataTable2
+          sensor="PressureData0"
+          time="PressureTime"
+          title="Pressure sensor 1"
+        />
+        <DataTable2
+          sensor="PressureData1"
+          time="PressureTime"
+          title="Pressure sensor 2"
+        />
+      </div>
     </div>
   );
 };

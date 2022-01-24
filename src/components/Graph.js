@@ -25,7 +25,6 @@ class DataGraph extends Component {
       if (window.location.pathname == "/emg") {
         if (localStorage.getItem("SwitchModeHockey") === "Skating") {
           this.setState({ labels: this.state.sensors.slice(0, 6) });
-          console.log(this.state.labels);
         } else {
           this.setState({ labels: this.state.sensors.slice(6, 12) });
         }
@@ -56,6 +55,7 @@ class DataGraph extends Component {
         });
       }
       if (window.location.pathname == "/gyro") {
+        this.setState({ labels: this.state.sensors });
         this.setState({
           graphData0: JSON.parse(localStorage.getItem("GyroData")),
         });
@@ -64,6 +64,7 @@ class DataGraph extends Component {
         });
       }
       if (window.location.pathname == "/pressure-plate") {
+        this.setState({ labels: this.state.sensors });
         this.setState({
           graphData0: JSON.parse(localStorage.getItem("PressureData0")),
         });
