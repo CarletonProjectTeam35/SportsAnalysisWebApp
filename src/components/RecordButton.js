@@ -97,7 +97,7 @@ class RecordButton extends Component {
       localStorage.setItem("RecordMode", "Recording");
       this.interval = setInterval(() => {
         fetch(
-          "https://api.thingspeak.com/channels/1623608/feeds.json?api_key=5F0TNMB5TYYI54BY&results=1"
+          "https://api.thingspeak.com/channels/1636837/feeds.json?api_key=3AGBX7JRF6XLVEBB&results=1"
         )
           .then((response) => response.json())
           .then((data) => data.feeds)
@@ -156,7 +156,7 @@ class RecordButton extends Component {
         localStorage.setItem("EmgTime", JSON.stringify(this.state.dataTimeEmg));
 
         fetch(
-          "https://api.thingspeak.com/channels/1632732/feeds.json?api_key=W4G634JOXBRFOQM6&results=1"
+          "https://api.thingspeak.com/channels/1640107/feeds.json?api_key=YRZNK03F5KTVUWT9&results=1"
         )
           .then((response) => response.json())
           .then((data) => data.feeds)
@@ -182,7 +182,7 @@ class RecordButton extends Component {
         );
 
         fetch(
-          "https://api.thingspeak.com/channels/1632733/feeds.json?api_key=FOE9M635EZ00Q5H1&results=1"
+          "https://api.thingspeak.com/channels/1640109/feeds.json?api_key=BOJ7IY29B1Y04Y7M&results=1"
         )
           .then((response) => response.json())
           .then((data) => data.feeds)
