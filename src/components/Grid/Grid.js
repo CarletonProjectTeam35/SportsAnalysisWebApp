@@ -67,14 +67,14 @@ class DataGrid extends Component {
     const selectedData = this.gridApi.getSelectedRows();
     const res = this.gridApi.applyTransaction({ remove: selectedData });
     res.remove.forEach(function (rowNode) {
-      db.collection("Data").doc(rowNode.data.recordingId).delete();
+      db.collection("Prod-Data").doc(rowNode.data.recordingId).delete();
     });
   };
   rowClickHandler = (event) => {
     window.location.href = `/data-history/${event.data.recordingId}`;
   };
   componentDidMount() {
-    db.collection("Data")
+    db.collection("Prod-Data")
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((element) => {

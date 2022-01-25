@@ -224,7 +224,7 @@ class RecordButton extends Component {
     } else if (!checked) {
       localStorage.setItem("RecordMode", "NotRecording");
       clearInterval(this.interval);
-      db.collection("Data").add({
+      db.collection("Prod-Data").add({
         switchModeHockey: localStorage.getItem("SwitchModeHockey"),
         switchModeTraining: localStorage.getItem("SwitchModeTraining"),
         drill: localStorage.getItem("Drill"),
