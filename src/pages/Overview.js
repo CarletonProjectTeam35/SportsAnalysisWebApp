@@ -12,7 +12,6 @@ const Overview = () => {
     <div>
       <div
         style={{
-          marginBottom: -100,
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-around",
