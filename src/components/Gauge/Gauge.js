@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { RadialGauge, RadialGaugeSeries } from "reaviz";
 import { compose } from "redux";
+import "./Gauge.css";
 class DataGauge extends Component {
   //Right now it only gets the data when this component is present but we might want to do it all the time
   constructor(props) {
@@ -55,7 +56,7 @@ class DataGauge extends Component {
         });
       } else {
         this.setState({
-          emgData0: 0,
+          emgData0: 0 ,
         });
         this.setState({
           emgData1: 0,
@@ -90,24 +91,28 @@ class DataGauge extends Component {
   }
 
   render() {
+    
     const data = [
-      { key: "EMG 1", data: this.state.emgData0 },
-      { key: "EMG 2", data: this.state.emgData1 },
-      { key: "EMG 3", data: this.state.emgData2 },
-      { key: "EMG 4", data: this.state.emgData3 },
-      { key: "EMG 5", data: this.state.emgData4 },
-      { key: "EMG 6", data: this.state.emgData5 },
+      { key: "EMG 1 (mV)", data: this.state.emgData0 },
+      { key: "EMG 2 (mV)", data: this.state.emgData1 },
+      { key: "EMG 3 (mV)", data: this.state.emgData2 },
+      { key: "EMG 4 (mV)", data: this.state.emgData3 },
+      { key: "EMG 5 (mV)", data: this.state.emgData4 },
+      { key: "EMG 6 (mV)", data: this.state.emgData5 },
       { key: "Gyro", data: this.state.gyroData },
-      { key: "Pressure Plate Left", data: this.state.pressureData0 },
-      { key: "Pressure Plate Right", data: this.state.pressureData1 },
+      { key: "Pressure Plate Left (lbs)", data: this.state.pressureData0 },
+      { key: "Pressure Plate Right (lbs)", data: this.state.pressureData1 },
     ];
     return (
+      <div className="gauge">
       <RadialGauge
-        width={1200}
-        height={500}
+        width ={700}
+        size = {600}
+        height = {600}
         data={data}
-        series={<RadialGaugeSeries minGaugeWidth={150} />}
+        series={<RadialGaugeSeries minGaugeWidth={200} />}
       />
+      </div>
     );
   }
 }
