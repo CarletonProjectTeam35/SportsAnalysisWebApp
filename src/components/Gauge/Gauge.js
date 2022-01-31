@@ -99,7 +99,7 @@ class DataGauge extends Component {
       { key: "EMG 4 (mV)", data: this.state.emgData3 },
       { key: "EMG 5 (mV)", data: this.state.emgData4 },
       { key: "EMG 6 (mV)", data: this.state.emgData5 },
-      { key: "Gyro", data: this.state.gyroData },
+      { key: "Gyro (m/s^2)", data: this.state.gyroData },
       { key: "Pressure Plate Left (lbs)", data: this.state.pressureData0 },
       { key: "Pressure Plate Right (lbs)", data: this.state.pressureData1 },
     ];
