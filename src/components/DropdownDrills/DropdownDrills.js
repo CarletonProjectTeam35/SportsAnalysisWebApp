@@ -25,20 +25,30 @@ class DropdownDrills extends Component {
   render() {
     const drills = [
       {
-        label: "Drill_1",
-        value: "drill_1",
+        label: "Crossover Drill",
+        value: "Crossover Drill",
       },
       {
-        label: "Drill_2",
-        value: "drill_2",
+        label: "Laps",
+        value: "Laps",
       },
       {
-        label: "Drill_3",
-        value: "drill_3",
+        label: "Blueline and Back Drill",
+        value: "Blueline and Back Drill",
+        
       },
       {
-        label: "Drill_4",
-        value: "drill_4",
+        label: "Stopping Drill",
+        value: "Stopping Drill",
+        
+      },
+      {
+        label: "Shooting Blueline",
+        value: "Shooting Blueline",
+      },
+      {
+        label: "Shooting Hashmarks",
+        value: "Shooting Hashmarks",
       },
     ];
     return (
