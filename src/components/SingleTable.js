@@ -1,19 +1,16 @@
-import React, { useState, Component } from "react";
-import { render } from "react-dom";
+import React, { Component } from "react";
 import { AgGridReact, AgGridColumn } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-class DataTable2 extends Component {
+import { db } from "../firebase";
+class SingleTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
       tableColour: this.props.colour,
-      tableTitleSkating: this.props.titleSkating,
-      tableTitleShooting: this.props.titleShooting,
       tableTitle: this.props.title,
       sensor: this.props.sensor,
-      time: this.props.time,
-      title: this.props.time,
+      tableType: this.props.tableType,
       data: [],
       columnDefs: [
         {
@@ -42,27 +39,38 @@ class DataTable2 extends Component {
   };
 
   componentDidMount() {
-    this.interval = setInterval(() => {
-      if (window.location.pathname == "/emg") {
-        if (localStorage.getItem("SwitchModeHockey") === "Skating") {
-          this.setState({ tableTitle: this.state.tableTitleSkating });
-        } else {
-          this.setState({ tableTitle: this.state.tableTitleShooting });
-        }
-      }
+    db.collection("Data")
+      .doc(window.location.pathname.slice(14))
+      .get()
+      .then((DocumentSnapshot) => {
+        const data = DocumentSnapshot.data();
 
-      let dataFetch = [];
-      let timeFetch = [];
-      if (JSON.parse(localStorage.getItem(this.state.sensor) != null)) {
-        dataFetch = JSON.parse(localStorage.getItem(this.state.sensor));
-        timeFetch = JSON.parse(localStorage.getItem(this.state.time));
-      }
-      this.setState({
-        data: dataFetch.map(function (x, i) {
-          return { DataPoint: x, timeStamp: timeFetch[i] };
-        }),
+        if (this.state.tableType == "Emg") {
+          console.log(data);
+          this.setState({
+            data: this.state.data.concat({
+              DataPoint: data.data.EmgData[this.state.sensor],
+              timeStamp: data.data.EmgData.emgTime,
+            }),
+          });
+        }
+        if (this.state.graphType == "Gyro") {
+          this.setState({
+            data: this.state.data.concat({
+              DataPoint: data.GyroData[this.state.sensor],
+              timeStamp: data.GyroData.gyroTime,
+            }),
+          });
+        }
+        if (this.state.graphType == "Pressure") {
+          this.setState({
+            data: this.state.data.concat({
+              DataPoint: data.PressureData[this.state.sensor],
+              timeStamp: data.PressureData.pressureTime,
+            }),
+          });
+        }
       });
-    }, 2000);
   }
   componentWillUnmount() {
     clearInterval(this.interval);
@@ -95,4 +103,4 @@ class DataTable2 extends Component {
   }
 }
 
-export default DataTable2;
+export default SingleTable;

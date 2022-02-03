@@ -113,8 +113,7 @@ class RecordButton extends Component {
             .then((response) => response.json())
             .then((data) => data.feeds)
             .then((newData) => {
-              console.log(newData);
-              console.log(this.state.dataTimeEmg.length);
+              tempTimeEmg = new Date(newData[0].created_at).toString();
               if (
                 this.state.dataTimeEmg.length == 0 ||
                 tempTimeEmg.substring(tempTimeEmg, tempTimeEmg.length - 32) !=
@@ -150,7 +149,7 @@ class RecordButton extends Component {
                     newData[0].field6
                   ),
                 });
-                tempTimeEmg = new Date(newData[0].created_at).toString();
+
                 this.setState({
                   dataTimeEmg: this.state.dataTimeEmg.concat(
                     tempTimeEmg.substring(tempTimeEmg, tempTimeEmg.length - 32)
@@ -193,6 +192,7 @@ class RecordButton extends Component {
             .then((response) => response.json())
             .then((data) => data.feeds)
             .then((newData) => {
+              tempTimeGyro = new Date(newData[0].created_at).toString();
               if (
                 this.state.dataTimeGyro.length == 0 ||
                 tempTimeGyro.substring(
@@ -205,7 +205,7 @@ class RecordButton extends Component {
                     newData[0].field1
                   ),
                 });
-                tempTimeGyro = new Date(newData[0].created_at).toString();
+
                 this.setState({
                   dataTimeGyro: this.state.dataTimeGyro.concat(
                     tempTimeGyro.substring(
@@ -231,6 +231,7 @@ class RecordButton extends Component {
             .then((response) => response.json())
             .then((data) => data.feeds)
             .then((newData) => {
+              tempTimePressure = new Date(newData[0].created_at).toString();
               if (
                 this.state.dataTimePressure.length == 0 ||
                 tempTimePressure.substring(
@@ -251,7 +252,7 @@ class RecordButton extends Component {
                     newData[0].field2
                   ),
                 });
-                tempTimePressure = new Date(newData[0].created_at).toString();
+
                 this.setState({
                   dataTimePressure: this.state.dataTimePressure.concat(
                     tempTimePressure.substring(
@@ -280,6 +281,7 @@ class RecordButton extends Component {
     } else if (!checked) {
       localStorage.setItem("RecordMode", "NotRecording");
       clearInterval(this.interval);
+      console.log(JSON.parse(localStorage.getItem("EmgData5")));
       db.collection("Data").add({
         switchModeHockey: localStorage.getItem("SwitchModeHockey"),
         switchModeTraining: localStorage.getItem("SwitchModeTraining"),
@@ -301,7 +303,7 @@ class RecordButton extends Component {
           },
           PressureData: {
             pressurePoint1: JSON.parse(localStorage.getItem("PressureData0")),
-            pressurePoint2: JSON.parse(localStorage.getItem("PressureTime")),
+            pressurePoint2: JSON.parse(localStorage.getItem("PressureData1")),
             pressureTime: JSON.parse(localStorage.getItem("PressureTime")),
           },
         },
