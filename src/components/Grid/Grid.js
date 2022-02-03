@@ -1,10 +1,10 @@
-import React, { useState, Component } from "react";
-import { render } from "react-dom";
+import React, { Component } from "react";
 import { AgGridReact, AgGridColumn } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import { db } from "../../firebase";
 import "./Grid.css";
+const { Parser } = require("json2csv");
 class DataGrid extends Component {
   constructor() {
     super();
@@ -19,6 +19,7 @@ class DataGrid extends Component {
           checkboxSelection: true,
           sortable: true,
           filter: true,
+          minWidth: 250,
         },
         {
           field: "participant",
@@ -44,11 +45,13 @@ class DataGrid extends Component {
           field: "time",
           sortable: true,
           filter: true,
+          minWidth: 250,
         },
         {
           field: "data",
-          minWidth: 100,
+          minWidth: 300,
         },
+        { field: "csvFile", minWidth: 350 },
       ],
       defaultColDef: {
         flex: 1,
@@ -70,8 +73,75 @@ class DataGrid extends Component {
       db.collection("Data").doc(rowNode.data.recordingId).delete();
     });
   };
-  rowClickHandler = (event) => {
-    window.location.href = `/data-history/${event.data.recordingId}`;
+  convertToCsv = (clickedData) => {
+    const dataArray = [
+      [
+        "Recording",
+        "Time",
+        "Participant",
+        "Hockey Mode",
+        "Training Mode",
+        "Drill",
+        "EMG 1",
+        "EMG 2",
+        "EMG 3",
+        "EMG 4",
+        "EMG 5",
+        "EMG 6",
+        "Gyro",
+        "Pressure 1",
+        "Pressure 2",
+      ],
+    ];
+    db.collection("Data")
+      .doc(clickedData.recordingId)
+      .get()
+      .then((DocumentSnapshot) => {
+        const data = DocumentSnapshot.data();
+        console.log(data);
+        for (let dataPoint in data.data.EmgData.emg1) {
+          dataArray.push([
+            clickedData.recordingId,
+            data.data.EmgData.emgTime[dataPoint],
+            data.participant,
+            data.switchModeHockey,
+            data.switchModeTraining,
+            data.drill,
+            data.data.EmgData.emg1[dataPoint],
+            data.data.EmgData.emg2[dataPoint],
+            data.data.EmgData.emg3[dataPoint],
+            data.data.EmgData.emg4[dataPoint],
+            data.data.EmgData.emg5[dataPoint],
+            data.data.EmgData.emg6[dataPoint],
+            //data.data.EmgData.gyro[dataPoint],
+            data.data.PressureData.pressurePoint1[dataPoint],
+            data.data.PressureData.pressurePoint2[dataPoint],
+            ,
+          ]);
+        }
+
+        let csvContent = "data:text/csv;charset=utf-8,";
+
+        dataArray.forEach(function (rowArray) {
+          let row = rowArray.join(",");
+          csvContent += row + "\r\n";
+        });
+
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", clickedData.recordingId);
+        document.body.appendChild(link);
+        link.click();
+      });
+  };
+
+  cellClickHandler = (event) => {
+    if (event.column.colId === "data") {
+      window.location.href = `/data-history/${event.data.recordingId}`;
+    } else if (event.column.colId === "csvFile") {
+      this.convertToCsv(event.data);
+    }
   };
   componentDidMount() {
     db.collection("Data")
@@ -87,6 +157,7 @@ class DataGrid extends Component {
               drill: element.data().drill,
               trainingMode: element.data().switchModeTraining,
               data: "Click here to see a data breakdown",
+              csvFile: "Click here to download csv for this recording",
             }),
           });
         });
@@ -115,7 +186,7 @@ class DataGrid extends Component {
             rowData={this.state.data}
             pagination={true}
             onGridReady={this.onGridReady}
-            onRowClicked={this.rowClickHandler}
+            onCellClicked={this.cellClickHandler}
           ></AgGridReact>
         </div>
       </div>

@@ -5,7 +5,7 @@ import DropdownDrills from "../components/DropdownDrills/DropdownDrills";
 import HockeySwitch from "../components/HockeySwitch/HockeySwitch";
 import DropdownNames from "../components/DropdownNames/DropdownNames";
 import TypeSwitch from "../components/TypeSwitch/TypeSwitch";
-import DataGauge from "../components/Gauge";
+import DataGauge from "../components/Gauge/Gauge";
 
 const Overview = () => {
   return (

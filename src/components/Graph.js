@@ -75,7 +75,7 @@ class DataGraph extends Component {
           graphTime: JSON.parse(localStorage.getItem("PressureTime")),
         });
       }
-    }, 4000);
+    }, 2000);
   }
 
   componentWillUnmount() {
