@@ -4,7 +4,6 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import { db } from "../../firebase";
 import "./Grid.css";
-const { Parser } = require("json2csv");
 class DataGrid extends Component {
   constructor() {
     super();
