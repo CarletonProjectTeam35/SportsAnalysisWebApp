@@ -1,44 +1,49 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { MenuItems } from "./MenuItems";
 import "./Navbar.css";
+import { useUserContext } from "../../context/userContext";
 
-class Navbar extends Component {
-  state = { clicked: false };
+const Navbar = () => {
+  const [state, setState] = useState({ clicked: false });
+  const { logoutUser } = useUserContext();
 
-  handleClick = () => {
-    this.setState({ clicked: !this.state.clicked });
+  const onClick = () => {
+    if (window.confirm("Are you sure you want to logout?")) {
+      logoutUser();
+    }
   };
-  onChange = (item, name) => {
-    console.log(item, name);
-    localStorage.setItem("Participant", item.value);
-  };
-
-  render() {
-    return (
-      <nav className="NavbarItems">
-        <h1 style={{ color: "white", paddingLeft: 10 }}>
-          {" "}
-          Hockey Data Analysis App
-        </h1>
-        <div className="menu-icon" onClick={this.handleClick}>
-          <i
-            className={this.state.clicked ? "fas fa-times" : "fas fa-bars"}
-          ></i>
-        </div>
-        <ul className={this.state.clicked ? "nav-menu active" : "nav-menu"}>
-          {MenuItems.map((item, index) => {
-            return (
+  return (
+    <nav className="NavbarItems">
+      <h1 style={{ color: "white", paddingLeft: 10 }}>
+        {" "}
+        Hockey Data Analysis App
+      </h1>
+      <div
+        className="menu-icon"
+        onClick={() => setState({ clicked: !state.clicked })}
+      >
+        <i className={state.clicked ? "fas fa-times" : "fas fa-bars"}></i>
+      </div>
+      <ul className={state.clicked ? "nav-menu active" : "nav-menu"}>
+        {MenuItems.map((item, index) => {
+          return (
+            <>
               <li key={index}>
                 <a className={item.cName} href={item.url}>
                   {item.title}
                 </a>
               </li>
-            );
-          })}
-        </ul>
-      </nav>
-    );
-  }
-}
+            </>
+          );
+        })}
+        <li>
+          <a className={"nav-links login-button"} href="#" onClick={onClick}>
+            Logout
+          </a>
+        </li>
+      </ul>
+    </nav>
+  );
+};
 
 export default Navbar;

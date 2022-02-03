@@ -56,7 +56,7 @@ class DataGauge extends Component {
         });
       } else {
         this.setState({
-          emgData0: 0 ,
+          emgData0: 0,
         });
         this.setState({
           emgData1: 0,
@@ -83,7 +83,7 @@ class DataGauge extends Component {
           gyroData: 0,
         });
       }
-    }, 4000);
+    }, 2000);
   }
 
   componentWillUnmount() {
@@ -91,7 +91,6 @@ class DataGauge extends Component {
   }
 
   render() {
-    
     const data = [
       { key: "EMG 1 (mV)", data: this.state.emgData0 },
       { key: "EMG 2 (mV)", data: this.state.emgData1 },
@@ -105,13 +104,15 @@ class DataGauge extends Component {
     ];
     return (
       <div className="gauge">
-      <RadialGauge
-        width ={700}
-        size = {600}
-        height = {600}
-        data={data}
-        series={<RadialGaugeSeries minGaugeWidth={200} />}
-      />
+        <RadialGauge
+          width={700}
+          size={600}
+          height={600}
+          data={data}
+          maxValue={1000}
+          minValue={0}
+          series={<RadialGaugeSeries minGaugeWidth={200} />}
+        />
       </div>
     );
   }

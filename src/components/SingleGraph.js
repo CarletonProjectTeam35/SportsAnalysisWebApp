@@ -3,7 +3,6 @@ import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 import { db } from "../firebase";
 class SingleGraph extends Component {
-  //Right now it only gets the data when this component is present but we might want to do it all the time
   constructor(props) {
     super(props);
 
@@ -26,7 +25,6 @@ class SingleGraph extends Component {
       .get()
       .then((DocumentSnapshot) => {
         const data = DocumentSnapshot.data();
-        console.log(data);
         if (this.state.graphType == "Emg") {
           this.setState({
             graphData0: data.data.EmgData.emg1,
@@ -117,7 +115,7 @@ class SingleGraph extends Component {
           labels,
           datasets: data,
         }}
-        height={20}
+        height={50}
         width={200}
         scale={{
           myScale: {
