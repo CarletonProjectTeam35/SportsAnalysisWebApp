@@ -94,133 +94,189 @@ class RecordButton extends Component {
     let tempTimeGyro;
     let tempTimePressure;
     if (checked) {
-      localStorage.setItem("RecordMode", "Recording");
-      this.interval = setInterval(() => {
-        fetch(
-          "https://api.thingspeak.com/channels/1636837/feeds.json?api_key=3AGBX7JRF6XLVEBB&results=1"
-        )
-          .then((response) => response.json())
-          .then((data) => data.feeds)
-          .then((newData) => {
-            console.log(newData);
-            this.setState({
-              dataPointEmg0: this.state.dataPointEmg0.concat(newData[0].field1),
-            });
-            this.setState({
-              dataPointEmg1: this.state.dataPointEmg1.concat(newData[0].field2),
-            });
-            this.setState({
-              dataPointEmg2: this.state.dataPointEmg2.concat(newData[0].field3),
-            });
-            this.setState({
-              dataPointEmg3: this.state.dataPointEmg3.concat(newData[0].field4),
-            });
-            this.setState({
-              dataPointEmg4: this.state.dataPointEmg4.concat(newData[0].field5),
-            });
-            this.setState({
-              dataPointEmg5: this.state.dataPointEmg5.concat(newData[0].field6),
-            });
-            tempTimeEmg = new Date(newData[0].created_at).toString();
-            this.setState({
-              dataTimeEmg: this.state.dataTimeEmg.concat(
-                tempTimeEmg.substring(tempTimeEmg, tempTimeEmg.length - 32)
-              ),
-            });
-          });
+      if (
+        localStorage.getItem("SwitchModeHockey") == null ||
+        localStorage.getItem("SwitchModeTraining") == null ||
+        localStorage.getItem("Drill") == null ||
+        localStorage.getItem("Participant") == null
+      ) {
+        alert(
+          "Please fill in all settings for recording before pressing the record button."
+        );
+        this.setState({ checked: false });
+      } else {
+        localStorage.setItem("RecordMode", "Recording");
+        this.interval = setInterval(() => {
+          fetch(
+            "https://api.thingspeak.com/channels/1636837/feeds.json?api_key=3AGBX7JRF6XLVEBB&results=1"
+          )
+            .then((response) => response.json())
+            .then((data) => data.feeds)
+            .then((newData) => {
+              console.log(newData);
+              console.log(this.state.dataTimeEmg.length);
+              if (
+                this.state.dataTimeEmg.length == 0 ||
+                tempTimeEmg.substring(tempTimeEmg, tempTimeEmg.length - 32) !=
+                  this.state.dataTimeEmg[this.state.dataTimeEmg.length - 1]
+              ) {
+                this.setState({
+                  dataPointEmg0: this.state.dataPointEmg0.concat(
+                    newData[0].field1
+                  ),
+                });
+                this.setState({
+                  dataPointEmg1: this.state.dataPointEmg1.concat(
+                    newData[0].field2
+                  ),
+                });
+                this.setState({
+                  dataPointEmg2: this.state.dataPointEmg2.concat(
+                    newData[0].field3
+                  ),
+                });
+                this.setState({
+                  dataPointEmg3: this.state.dataPointEmg3.concat(
+                    newData[0].field4
+                  ),
+                });
+                this.setState({
+                  dataPointEmg4: this.state.dataPointEmg4.concat(
+                    newData[0].field5
+                  ),
+                });
+                this.setState({
+                  dataPointEmg5: this.state.dataPointEmg5.concat(
+                    newData[0].field6
+                  ),
+                });
+                tempTimeEmg = new Date(newData[0].created_at).toString();
+                this.setState({
+                  dataTimeEmg: this.state.dataTimeEmg.concat(
+                    tempTimeEmg.substring(tempTimeEmg, tempTimeEmg.length - 32)
+                  ),
+                });
 
-        localStorage.setItem(
-          "EmgData0",
-          JSON.stringify(this.state.dataPointEmg0)
-        );
-        localStorage.setItem(
-          "EmgData1",
-          JSON.stringify(this.state.dataPointEmg1)
-        );
-        localStorage.setItem(
-          "EmgData2",
-          JSON.stringify(this.state.dataPointEmg2)
-        );
-        localStorage.setItem(
-          "EmgData3",
-          JSON.stringify(this.state.dataPointEmg3)
-        );
-        localStorage.setItem(
-          "EmgData4",
-          JSON.stringify(this.state.dataPointEmg4)
-        );
-        localStorage.setItem(
-          "EmgData5",
-          JSON.stringify(this.state.dataPointEmg5)
-        );
-        localStorage.setItem("EmgTime", JSON.stringify(this.state.dataTimeEmg));
+                localStorage.setItem(
+                  "EmgData0",
+                  JSON.stringify(this.state.dataPointEmg0)
+                );
+                localStorage.setItem(
+                  "EmgData1",
+                  JSON.stringify(this.state.dataPointEmg1)
+                );
+                localStorage.setItem(
+                  "EmgData2",
+                  JSON.stringify(this.state.dataPointEmg2)
+                );
+                localStorage.setItem(
+                  "EmgData3",
+                  JSON.stringify(this.state.dataPointEmg3)
+                );
+                localStorage.setItem(
+                  "EmgData4",
+                  JSON.stringify(this.state.dataPointEmg4)
+                );
+                localStorage.setItem(
+                  "EmgData5",
+                  JSON.stringify(this.state.dataPointEmg5)
+                );
+                localStorage.setItem(
+                  "EmgTime",
+                  JSON.stringify(this.state.dataTimeEmg)
+                );
+              }
+            });
+          fetch(
+            "https://api.thingspeak.com/channels/1640107/feeds.json?api_key=YRZNK03F5KTVUWT9&results=1"
+          )
+            .then((response) => response.json())
+            .then((data) => data.feeds)
+            .then((newData) => {
+              if (
+                this.state.dataTimeGyro.length == 0 ||
+                tempTimeGyro.substring(
+                  tempTimeGyro,
+                  tempTimeGyro.length - 32
+                ) != this.state.dataTimeGyro[this.state.dataTimeGyro.length - 1]
+              ) {
+                this.setState({
+                  dataPointGyro: this.state.dataPointGyro.concat(
+                    newData[0].field1
+                  ),
+                });
+                tempTimeGyro = new Date(newData[0].created_at).toString();
+                this.setState({
+                  dataTimeGyro: this.state.dataTimeGyro.concat(
+                    tempTimeGyro.substring(
+                      tempTimeGyro,
+                      tempTimeGyro.length - 32
+                    )
+                  ),
+                });
 
-        fetch(
-          "https://api.thingspeak.com/channels/1640107/feeds.json?api_key=YRZNK03F5KTVUWT9&results=1"
-        )
-          .then((response) => response.json())
-          .then((data) => data.feeds)
-          .then((newData) => {
-            this.setState({
-              dataPointGyro: this.state.dataPointGyro.concat(newData[0].field1),
+                localStorage.setItem(
+                  "GyroData",
+                  JSON.stringify(this.state.dataPointGyro)
+                );
+                localStorage.setItem(
+                  "GyroTime",
+                  JSON.stringify(this.state.dataTimeGyro)
+                );
+              }
             });
-            tempTimeGyro = new Date(newData[0].created_at).toString();
-            this.setState({
-              dataTimeGyro: this.state.dataTimeGyro.concat(
-                tempTimeGyro.substring(tempTimeGyro, tempTimeGyro.length - 32)
-              ),
-            });
-          });
-
-        localStorage.setItem(
-          "GyroData",
-          JSON.stringify(this.state.dataPointGyro)
-        );
-        localStorage.setItem(
-          "GyroTime",
-          JSON.stringify(this.state.dataTimeGyro)
-        );
-
-        fetch(
-          "https://api.thingspeak.com/channels/1640109/feeds.json?api_key=BOJ7IY29B1Y04Y7M&results=1"
-        )
-          .then((response) => response.json())
-          .then((data) => data.feeds)
-          .then((newData) => {
-            this.setState({
-              dataPointPressure0: this.state.dataPointPressure0.concat(
-                newData[0].field1
-              ),
-            });
-            this.setState({
-              dataPointPressure1: this.state.dataPointPressure1.concat(
-                newData[0].field2
-              ),
-            });
-            tempTimePressure = new Date(newData[0].created_at).toString();
-            this.setState({
-              dataTimePressure: this.state.dataTimePressure.concat(
+          fetch(
+            "https://api.thingspeak.com/channels/1640109/feeds.json?api_key=BOJ7IY29B1Y04Y7M&results=1"
+          )
+            .then((response) => response.json())
+            .then((data) => data.feeds)
+            .then((newData) => {
+              if (
+                this.state.dataTimePressure.length == 0 ||
                 tempTimePressure.substring(
                   tempTimePressure,
                   tempTimePressure.length - 32
-                )
-              ),
-            });
-          });
+                ) !=
+                  this.state.dataTimePressure[
+                    this.state.dataTimePressure.length - 1
+                  ]
+              ) {
+                this.setState({
+                  dataPointPressure0: this.state.dataPointPressure0.concat(
+                    newData[0].field1
+                  ),
+                });
+                this.setState({
+                  dataPointPressure1: this.state.dataPointPressure1.concat(
+                    newData[0].field2
+                  ),
+                });
+                tempTimePressure = new Date(newData[0].created_at).toString();
+                this.setState({
+                  dataTimePressure: this.state.dataTimePressure.concat(
+                    tempTimePressure.substring(
+                      tempTimePressure,
+                      tempTimePressure.length - 32
+                    )
+                  ),
+                });
 
-        localStorage.setItem(
-          "PressureData0",
-          JSON.stringify(this.state.dataPointPressure0)
-        );
-        localStorage.setItem(
-          "PressureData1",
-          JSON.stringify(this.state.dataPointPressure1)
-        );
-        localStorage.setItem(
-          "PressureTime",
-          JSON.stringify(this.state.dataTimePressure)
-        );
-      }, 2000);
+                localStorage.setItem(
+                  "PressureData0",
+                  JSON.stringify(this.state.dataPointPressure0)
+                );
+                localStorage.setItem(
+                  "PressureData1",
+                  JSON.stringify(this.state.dataPointPressure1)
+                );
+                localStorage.setItem(
+                  "PressureTime",
+                  JSON.stringify(this.state.dataTimePressure)
+                );
+              }
+            });
+        }, 2000);
+      }
     } else if (!checked) {
       localStorage.setItem("RecordMode", "NotRecording");
       clearInterval(this.interval);

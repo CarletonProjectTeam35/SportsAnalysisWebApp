@@ -36,7 +36,12 @@ const Gyro = () => {
           marginTop: 10,
         }}
       >
-        <DataTable2 sensor="GyroData" time="GyroTime" title="Gyro sensor" />
+        <DataTable2
+          sensor="GyroData"
+          time="GyroTime"
+          title="Gyro sensor"
+          colour="rgb(255, 99, 132)"
+        />
       </div>
     </div>
   );

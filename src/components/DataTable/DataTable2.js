@@ -8,6 +8,7 @@ class DataTable2 extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      tableColour: this.props.colour,
       tableTitle: this.props.title,
       sensor: this.props.sensor,
       time: this.props.time,
@@ -67,7 +68,12 @@ class DataTable2 extends Component {
         className="ag-theme-alpine"
         style={{ height: 300, width: 300, margin: 5 }}
       >
-        <h1 style={{ textAlign: "center", borderStyle: "groove" }}>
+        <h1
+          style={{
+            textAlign: "center",
+            backgroundColor: `${this.state.tableColour}`,
+          }}
+        >
           {this.state.tableTitle}{" "}
         </h1>
         <AgGridReact

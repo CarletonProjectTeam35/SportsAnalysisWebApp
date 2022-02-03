@@ -83,7 +83,7 @@ class DataGauge extends Component {
           gyroData: 0,
         });
       }
-    }, 4000);
+    }, 2000);
   }
 
   componentWillUnmount() {

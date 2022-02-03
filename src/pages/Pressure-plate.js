@@ -44,11 +44,13 @@ const PressurePlate = () => {
           sensor="PressureData0"
           time="PressureTime"
           title="Pressure sensor 1"
+          colour="rgb(255, 99, 132)"
         />
         <DataTable2
           sensor="PressureData1"
           time="PressureTime"
           title="Pressure sensor 2"
+          colour="rgb(53, 162, 235)"
         />
       </div>
     </div>

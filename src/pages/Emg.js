@@ -52,17 +52,47 @@ const Emg = () => {
           marginTop: 10,
         }}
       >
-        <DataTable2 sensor="EmgData0" time="EmgTime" title="EMG sensor 1" />
+        <DataTable2
+          sensor="EmgData0"
+          time="EmgTime"
+          title="EMG sensor 1"
+          colour="rgb(255, 99, 132)"
+        />
 
-        <DataTable2 sensor="EmgData1" time="EmgTime" title="EMG sensor 2" />
+        <DataTable2
+          sensor="EmgData1"
+          time="EmgTime"
+          title="EMG sensor 2"
+          colour="rgb(53, 162, 235)"
+        />
 
-        <DataTable2 sensor="EmgData2" time="EmgTime" title="EMG sensor 3" />
+        <DataTable2
+          sensor="EmgData2"
+          time="EmgTime"
+          title="EMG sensor 3"
+          colour="rgb(50,205,50)"
+        />
 
-        <DataTable2 sensor="EmgData3" time="EmgTime" title="EMG sensor 4" />
+        <DataTable2
+          sensor="EmgData3"
+          time="EmgTime"
+          title="EMG sensor 4"
+          colour="rgb(252, 118, 5 )"
+        />
 
-        <DataTable2 sensor="EmgData4" time="EmgTime" title="EMG sensor 5" />
+        <DataTable2
+          sensor="EmgData4"
+          time="EmgTime"
+          title="EMG sensor 5"
+          colour="rgb(187, 51, 255)"
+        />
 
-        <DataTable2 sensor="EmgData5" time="EmgTime" title="EMG sensor 6" />
+        <DataTable2
+          sensor="EmgData5"
+          time="EmgTime"
+          title="EMG sensor 6"
+          colour="rgb(223, 255, 0)"
+        />
       </div>
     </div>
   );
