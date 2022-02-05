@@ -178,6 +178,8 @@ class DataGrid extends Component {
         </button>
         <div className="ag-theme-alpine" style={{ height: 700, width: "100%" }}>
           <AgGridReact
+            columnHoverHighlight={true}
+            suppressRowHoverHighlight={true}
             columnDefs={this.state.columnDefs}
             defaultColDef={this.state.defaultColDef}
             suppressRowClickSelection={true}
