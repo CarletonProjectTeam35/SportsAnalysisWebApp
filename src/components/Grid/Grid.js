@@ -69,7 +69,7 @@ class DataGrid extends Component {
     const selectedData = this.gridApi.getSelectedRows();
     const res = this.gridApi.applyTransaction({ remove: selectedData });
     res.remove.forEach(function (rowNode) {
-      db.collection("Data").doc(rowNode.data.recordingId).delete();
+      db.collection("Prod-Data").doc(rowNode.data.recordingId).delete();
     });
   };
   convertToCsv = (clickedData) => {
@@ -92,7 +92,7 @@ class DataGrid extends Component {
         "Pressure 2",
       ],
     ];
-    db.collection("Data")
+    db.collection("Prod-Data")
       .doc(clickedData.recordingId)
       .get()
       .then((DocumentSnapshot) => {
@@ -143,7 +143,7 @@ class DataGrid extends Component {
     }
   };
   componentDidMount() {
-    db.collection("Data")
+    db.collection("Prod-Data")
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((element) => {

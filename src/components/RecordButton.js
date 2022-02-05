@@ -282,7 +282,7 @@ class RecordButton extends Component {
       localStorage.setItem("RecordMode", "NotRecording");
       clearInterval(this.interval);
       console.log(JSON.parse(localStorage.getItem("EmgData5")));
-      db.collection("Data").add({
+      db.collection("Prod-Data").add({
         switchModeHockey: localStorage.getItem("SwitchModeHockey"),
         switchModeTraining: localStorage.getItem("SwitchModeTraining"),
         drill: localStorage.getItem("Drill"),
