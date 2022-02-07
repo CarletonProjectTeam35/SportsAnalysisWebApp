@@ -4,6 +4,8 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import { db } from "../../firebase";
 import "./Grid.css";
+import Modal from "react-modal";
+
 class DataGrid extends Component {
   constructor() {
     super();
@@ -47,6 +49,10 @@ class DataGrid extends Component {
           minWidth: 250,
         },
         {
+          field: "notes",
+          minWidth: 200,
+        },
+        {
           field: "data",
           minWidth: 300,
         },
@@ -58,13 +64,17 @@ class DataGrid extends Component {
       },
       rowSelection: "multiple",
       rowData: null,
+      notes: "",
     };
+    this.toggleModal = this.toggleModal.bind(this);
   }
   onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
   };
-
+  toggleModal() {
+    this.setState((prevState) => ({ modalOpened: !prevState.modalOpened }));
+  }
   onRemoveSelected = () => {
     const selectedData = this.gridApi.getSelectedRows();
     const res = this.gridApi.applyTransaction({ remove: selectedData });
@@ -81,13 +91,14 @@ class DataGrid extends Component {
         "Hockey Mode",
         "Training Mode",
         "Drill",
+        "Notes",
         "EMG 1",
         "EMG 2",
         "EMG 3",
         "EMG 4",
         "EMG 5",
         "EMG 6",
-        "Gyro",
+        //"Gyro",
         "Pressure 1",
         "Pressure 2",
       ],
@@ -97,7 +108,7 @@ class DataGrid extends Component {
       .get()
       .then((DocumentSnapshot) => {
         const data = DocumentSnapshot.data();
-        console.log(data);
+
         for (let dataPoint in data.data.EmgData.emg1) {
           dataArray.push([
             clickedData.recordingId,
@@ -106,6 +117,7 @@ class DataGrid extends Component {
             data.switchModeHockey,
             data.switchModeTraining,
             data.drill,
+            data.notes,
             data.data.EmgData.emg1[dataPoint],
             data.data.EmgData.emg2[dataPoint],
             data.data.EmgData.emg3[dataPoint],
@@ -115,7 +127,6 @@ class DataGrid extends Component {
             //data.data.EmgData.gyro[dataPoint],
             data.data.PressureData.pressurePoint1[dataPoint],
             data.data.PressureData.pressurePoint2[dataPoint],
-            ,
           ]);
         }
 
@@ -140,6 +151,19 @@ class DataGrid extends Component {
       window.location.href = `/data-history/${event.data.recordingId}`;
     } else if (event.column.colId === "csvFile") {
       this.convertToCsv(event.data);
+    } else if (event.column.colId === "notes") {
+      db.collection("Data")
+        .doc(event.data.recordingId)
+        .get()
+        .then(
+          (
+            querySnapshot //console.log(querySnapshot.data().notes)
+          ) => this.setState({ notes: querySnapshot.data().notes })
+        );
+
+      console.log(this.state.notes);
+
+      this.toggleModal();
     }
   };
   componentDidMount() {
@@ -157,6 +181,7 @@ class DataGrid extends Component {
               trainingMode: element.data().switchModeTraining,
               data: "Click here to see a data breakdown",
               csvFile: "Click here to download csv for this recording",
+              notes: element.data().notes,
             }),
           });
         });
@@ -164,6 +189,19 @@ class DataGrid extends Component {
   }
 
   render() {
+    Modal.setAppElement("#root");
+    const customStyles = {
+      content: {
+        height: "25%",
+        width: "50%",
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)",
+      },
+    };
     return (
       <div>
         <button
@@ -179,7 +217,7 @@ class DataGrid extends Component {
         <div className="ag-theme-alpine" style={{ height: 700, width: "100%" }}>
           <AgGridReact
             columnHoverHighlight={true}
-            suppressRowHoverHighlight={true}
+            //  suppressRowHoverHighlight={true}
             columnDefs={this.state.columnDefs}
             defaultColDef={this.state.defaultColDef}
             suppressRowClickSelection={true}
@@ -190,6 +228,26 @@ class DataGrid extends Component {
             onCellClicked={this.cellClickHandler}
           ></AgGridReact>
         </div>
+        <Modal
+          style={customStyles}
+          isOpen={this.state.modalOpened}
+          onRequestClose={this.toggleModal}
+        >
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <h1 style={{ marginBottom: 20 }}>Notes for this Recording:</h1>
+            <a
+              style={{
+                cursor: "pointer",
+                marginLeft: "auto",
+                fontSize: "2rem",
+                color: "black",
+              }}
+              className="fas fa-times"
+              onClick={this.toggleModal}
+            ></a>
+          </div>
+          <p>{this.state.notes}</p>
+        </Modal>
       </div>
     );
   }
