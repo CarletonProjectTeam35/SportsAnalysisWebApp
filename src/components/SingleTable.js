@@ -39,7 +39,7 @@ class SingleTable extends Component {
   };
 
   componentDidMount() {
-    db.collection("Data")
+    db.collection("Prod-Data")
       .doc(window.location.pathname.slice(14))
       .get()
       .then((DocumentSnapshot) => {

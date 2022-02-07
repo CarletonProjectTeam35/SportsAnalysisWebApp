@@ -23,7 +23,7 @@ function App() {
         <>
           {" "}
           {user ? (
-            <Router>
+            <Router basename={process.env.PUBLIC_URL}>
               <div className="App">
                 <Navbar />
                 <div className="content">
