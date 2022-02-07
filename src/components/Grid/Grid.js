@@ -152,7 +152,7 @@ class DataGrid extends Component {
     } else if (event.column.colId === "csvFile") {
       this.convertToCsv(event.data);
     } else if (event.column.colId === "notes") {
-      db.collection("Data")
+      db.collection("Prod-Data")
         .doc(event.data.recordingId)
         .get()
         .then(
