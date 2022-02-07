@@ -29,7 +29,7 @@ class RecordButton extends Component {
     event.preventDefault();
     this.toggleModal();
 
-    db.collection("Data").add({
+    db.collection("Prod-Data").add({
       switchModeHockey: localStorage.getItem("SwitchModeHockey"),
       switchModeTraining: localStorage.getItem("SwitchModeTraining"),
       drill: localStorage.getItem("Drill"),
