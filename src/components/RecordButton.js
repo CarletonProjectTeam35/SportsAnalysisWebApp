@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Switch from "react-switch";
 import { db } from "../firebase";
+import Modal from "react-modal";
 
 class RecordButton extends Component {
   constructor() {
@@ -19,8 +20,45 @@ class RecordButton extends Component {
       dataPointPressure0: [],
       dataPointPressure1: [],
       dataTimePressure: [],
+      modalOpened: false,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
+  }
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.toggleModal();
+
+    db.collection("Data").add({
+      switchModeHockey: localStorage.getItem("SwitchModeHockey"),
+      switchModeTraining: localStorage.getItem("SwitchModeTraining"),
+      drill: localStorage.getItem("Drill"),
+      participant: localStorage.getItem("Participant"),
+      notes: this.inputNode.value,
+      data: {
+        EmgData: {
+          emg1: JSON.parse(localStorage.getItem("EmgData0")),
+          emg2: JSON.parse(localStorage.getItem("EmgData1")),
+          emg3: JSON.parse(localStorage.getItem("EmgData2")),
+          emg4: JSON.parse(localStorage.getItem("EmgData3")),
+          emg5: JSON.parse(localStorage.getItem("EmgData4")),
+          emg6: JSON.parse(localStorage.getItem("EmgData5")),
+          emgTime: JSON.parse(localStorage.getItem("EmgTime")),
+        },
+        GyroData: {
+          gyro: JSON.parse(localStorage.getItem("GyroData")),
+          gyroTime: JSON.parse(localStorage.getItem("GyroTime")),
+        },
+        PressureData: {
+          pressurePoint1: JSON.parse(localStorage.getItem("PressureData0")),
+          pressurePoint2: JSON.parse(localStorage.getItem("PressureData1")),
+          pressureTime: JSON.parse(localStorage.getItem("PressureTime")),
+        },
+      },
+    });
+  };
+  toggleModal() {
+    this.setState((prevState) => ({ modalOpened: !prevState.modalOpened }));
   }
   componentDidMount() {
     const storedValue = localStorage.getItem("RecordMode");
@@ -279,39 +317,26 @@ class RecordButton extends Component {
         }, 2000);
       }
     } else if (!checked) {
+      this.toggleModal();
       localStorage.setItem("RecordMode", "NotRecording");
       clearInterval(this.interval);
-      console.log(JSON.parse(localStorage.getItem("EmgData5")));
-      db.collection("Data").add({
-        switchModeHockey: localStorage.getItem("SwitchModeHockey"),
-        switchModeTraining: localStorage.getItem("SwitchModeTraining"),
-        drill: localStorage.getItem("Drill"),
-        participant: localStorage.getItem("Participant"),
-        data: {
-          EmgData: {
-            emg1: JSON.parse(localStorage.getItem("EmgData0")),
-            emg2: JSON.parse(localStorage.getItem("EmgData1")),
-            emg3: JSON.parse(localStorage.getItem("EmgData2")),
-            emg4: JSON.parse(localStorage.getItem("EmgData3")),
-            emg5: JSON.parse(localStorage.getItem("EmgData4")),
-            emg6: JSON.parse(localStorage.getItem("EmgData5")),
-            emgTime: JSON.parse(localStorage.getItem("EmgTime")),
-          },
-          GyroData: {
-            gyro: JSON.parse(localStorage.getItem("GyroData")),
-            gyroTime: JSON.parse(localStorage.getItem("GyroTime")),
-          },
-          PressureData: {
-            pressurePoint1: JSON.parse(localStorage.getItem("PressureData0")),
-            pressurePoint2: JSON.parse(localStorage.getItem("PressureData1")),
-            pressureTime: JSON.parse(localStorage.getItem("PressureTime")),
-          },
-        },
-      });
     }
   }
 
   render() {
+    Modal.setAppElement("#root");
+    const customStyles = {
+      content: {
+        height: "25%",
+        width: "50%",
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)",
+      },
+    };
     return (
       <div
         style={{
@@ -336,6 +361,42 @@ class RecordButton extends Component {
             id="material-switch"
           />
         </label>
+        <Modal
+          style={customStyles}
+          // className={{ base: [style.base] }}
+          //  overlayClassName={{ base: [style.overlayBase] }}
+          isOpen={this.state.modalOpened}
+          onRequestClose={this.toggleModal}
+        >
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <h1 style={{ marginBottom: 20 }}>Add a note to your recording:</h1>
+            <a
+              style={{
+                cursor: "pointer",
+                marginLeft: "auto",
+                fontSize: "2rem",
+              }}
+              className="fas fa-times"
+              onClick={this.toggleModal}
+            ></a>
+          </div>
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              <textarea
+                style={{ height: "100%", width: "90%", fontSize: 20 }}
+                name="notes"
+                rows="5"
+                ref={(node) => (this.inputNode = node)}
+              />
+            </label>
+            <button
+              style={{ backgroundColor: "#666bf4", width: 200, height: 40 }}
+              type="submit"
+            >
+              Add note to recording
+            </button>
+          </form>{" "}
+        </Modal>
       </div>
     );
   }

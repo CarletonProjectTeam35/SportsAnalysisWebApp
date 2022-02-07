@@ -9,6 +9,7 @@ import PressurePlate from "./pages/Pressure-plate";
 import DataHistory from "./pages/Data-history";
 import SingleDataHistory from "./pages/SingleDataHistory";
 import Signin from "./components/Login/Login";
+import Speed from "./pages/Speed";
 import { useUserContext } from "./context/userContext";
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
                       path="/pressure-plate"
                       element={<PressurePlate />}
                     ></Route>
+                    <Route exact path="/speed" element={<Speed />}></Route>
                     <Route
                       exact
                       path="/data-history"

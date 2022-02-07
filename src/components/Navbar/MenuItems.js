@@ -20,6 +20,11 @@ export const MenuItems = [
     cName: "nav-links",
   },
   {
+    title: "Speed",
+    url: "/speed",
+    cName: "nav-links",
+  },
+  {
     title: "Data History",
     url: "/data-history",
     cName: "nav-links",
