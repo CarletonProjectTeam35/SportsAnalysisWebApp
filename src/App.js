@@ -1,7 +1,7 @@
 import "./App.css";
 import React from "react";
 import Navbar from "./components/Navbar/Navbar";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import Overview from "./pages/Overview";
 import Emg from "./pages/Emg";
 import Gyro from "./pages/Gyro";
@@ -22,7 +22,7 @@ function App() {
         <>
           {" "}
           {user ? (
-            <Router basename={process.env.PUBLIC_URL}>
+            <Router>
               <div className="App">
                 <Navbar />
                 <div className="content">

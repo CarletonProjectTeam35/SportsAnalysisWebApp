@@ -56,6 +56,33 @@ class RecordButton extends Component {
         },
       },
     });
+    db.collection("Prod-Backup").add({
+      switchModeHockey: localStorage.getItem("SwitchModeHockey"),
+      switchModeTraining: localStorage.getItem("SwitchModeTraining"),
+      drill: localStorage.getItem("Drill"),
+      participant: localStorage.getItem("Participant"),
+      notes: this.inputNode.value,
+      data: {
+        EmgData: {
+          emg1: JSON.parse(localStorage.getItem("EmgData0")),
+          emg2: JSON.parse(localStorage.getItem("EmgData1")),
+          emg3: JSON.parse(localStorage.getItem("EmgData2")),
+          emg4: JSON.parse(localStorage.getItem("EmgData3")),
+          emg5: JSON.parse(localStorage.getItem("EmgData4")),
+          emg6: JSON.parse(localStorage.getItem("EmgData5")),
+          emgTime: JSON.parse(localStorage.getItem("EmgTime")),
+        },
+        GyroData: {
+          gyro: JSON.parse(localStorage.getItem("GyroData")),
+          gyroTime: JSON.parse(localStorage.getItem("GyroTime")),
+        },
+        PressureData: {
+          pressurePoint1: JSON.parse(localStorage.getItem("PressureData0")),
+          pressurePoint2: JSON.parse(localStorage.getItem("PressureData1")),
+          pressureTime: JSON.parse(localStorage.getItem("PressureTime")),
+        },
+      },
+    });
   };
   toggleModal() {
     this.setState((prevState) => ({ modalOpened: !prevState.modalOpened }));
