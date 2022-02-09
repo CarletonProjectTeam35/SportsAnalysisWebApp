@@ -148,7 +148,7 @@ class DataGrid extends Component {
 
   cellClickHandler = (event) => {
     if (event.column.colId === "data") {
-      window.location.href = `/data-history/#/${event.data.recordingId}`;
+      window.location.href = `/#/data-history/${event.data.recordingId}`;
     } else if (event.column.colId === "csvFile") {
       this.convertToCsv(event.data);
     } else if (event.column.colId === "notes") {
