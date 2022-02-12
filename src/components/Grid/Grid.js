@@ -176,7 +176,7 @@ class DataGrid extends Component {
               recordingId: element.id,
               participant: element.data().participant,
               hockeyMode: element.data().switchModeHockey,
-              time: element.data().data.EmgData.emgTime,
+              time: element.data().data.EmgData.emgTime[0],
               drill: element.data().drill,
               trainingMode: element.data().switchModeTraining,
               data: "Click here to see a data breakdown",

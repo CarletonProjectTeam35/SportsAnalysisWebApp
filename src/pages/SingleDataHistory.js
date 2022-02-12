@@ -1,6 +1,7 @@
 import React from "react";
-import SingleGraph from "../components/SingleGraph";
-import SingleTable from "../components/SingleTable";
+import SingleGraph from "../components/SingleGraph/SingleGraph";
+import SingleTable from "../components/SingleTable/SingleTable";
+
 const SingleDataHistory = () => {
   return (
     <div>

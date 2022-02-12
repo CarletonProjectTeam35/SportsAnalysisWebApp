@@ -1,18 +1,19 @@
 import React from "react";
 import Popup from "reactjs-popup";
 import "./ClearButton.css";
-//
+import {Button, Modal} from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const contentStyle = {
-  maxWidth: "600px",
-  width: "90%",
-};
+
+// const contentStyle = {
+//   maxWidth: "600px",
+//   width: "90%",
+// };
 
 const CustomModal = () => (
   <Popup
-    trigger={<button className="button"> Clear Data </button>}
+    trigger={<Button variant="primary" className="button"> Clear Data </Button>}
     modal
-    contentStyle={contentStyle}
   >
     {(close) => (
       <div className="modal">

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { AgGridReact, AgGridColumn } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 class SingleTable extends Component {
   constructor(props) {
     super(props);
