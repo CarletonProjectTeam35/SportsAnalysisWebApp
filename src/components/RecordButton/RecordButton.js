@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import Switch from "react-switch";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import Modal from "react-modal";
+// import { Button, Modal } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 class RecordButton extends Component {
   constructor() {
@@ -182,7 +185,7 @@ class RecordButton extends Component {
               if (
                 this.state.dataTimeEmg.length == 0 ||
                 tempTimeEmg.substring(tempTimeEmg, tempTimeEmg.length - 32) !=
-                  this.state.dataTimeEmg[this.state.dataTimeEmg.length - 1]
+                this.state.dataTimeEmg[this.state.dataTimeEmg.length - 1]
               ) {
                 this.setState({
                   dataPointEmg0: this.state.dataPointEmg0.concat(
@@ -303,9 +306,9 @@ class RecordButton extends Component {
                   tempTimePressure,
                   tempTimePressure.length - 32
                 ) !=
-                  this.state.dataTimePressure[
-                    this.state.dataTimePressure.length - 1
-                  ]
+                this.state.dataTimePressure[
+                this.state.dataTimePressure.length - 1
+                ]
               ) {
                 this.setState({
                   dataPointPressure0: this.state.dataPointPressure0.concat(
@@ -350,6 +353,69 @@ class RecordButton extends Component {
     }
   }
 
+  openModal = () => this.setState({ isOpen: true });
+  closeModal = () => this.setState({ isOpen: false });
+  // closeAndSubmit = (event) => {
+  //   event.preventDefault();
+  //   this.toggleModal();
+
+  //   db.collection("Prod-Data").add({
+  //     switchModeHockey: localStorage.getItem("SwitchModeHockey"),
+  //     switchModeTraining: localStorage.getItem("SwitchModeTraining"),
+  //     drill: localStorage.getItem("Drill"),
+  //     participant: localStorage.getItem("Participant"),
+  //     notes: this.inputNode.value,
+  //     data: {
+  //       EmgData: {
+  //         emg1: JSON.parse(localStorage.getItem("EmgData0")),
+  //         emg2: JSON.parse(localStorage.getItem("EmgData1")),
+  //         emg3: JSON.parse(localStorage.getItem("EmgData2")),
+  //         emg4: JSON.parse(localStorage.getItem("EmgData3")),
+  //         emg5: JSON.parse(localStorage.getItem("EmgData4")),
+  //         emg6: JSON.parse(localStorage.getItem("EmgData5")),
+  //         emgTime: JSON.parse(localStorage.getItem("EmgTime")),
+  //       },
+  //       GyroData: {
+  //         gyro: JSON.parse(localStorage.getItem("GyroData")),
+  //         gyroTime: JSON.parse(localStorage.getItem("GyroTime")),
+  //       },
+  //       PressureData: {
+  //         pressurePoint1: JSON.parse(localStorage.getItem("PressureData0")),
+  //         pressurePoint2: JSON.parse(localStorage.getItem("PressureData1")),
+  //         pressureTime: JSON.parse(localStorage.getItem("PressureTime")),
+  //       },
+  //     },
+  //   });
+  //   db.collection("Prod-Backup").add({
+  //     switchModeHockey: localStorage.getItem("SwitchModeHockey"),
+  //     switchModeTraining: localStorage.getItem("SwitchModeTraining"),
+  //     drill: localStorage.getItem("Drill"),
+  //     participant: localStorage.getItem("Participant"),
+  //     notes: this.inputNode.value,
+  //     data: {
+  //       EmgData: {
+  //         emg1: JSON.parse(localStorage.getItem("EmgData0")),
+  //         emg2: JSON.parse(localStorage.getItem("EmgData1")),
+  //         emg3: JSON.parse(localStorage.getItem("EmgData2")),
+  //         emg4: JSON.parse(localStorage.getItem("EmgData3")),
+  //         emg5: JSON.parse(localStorage.getItem("EmgData4")),
+  //         emg6: JSON.parse(localStorage.getItem("EmgData5")),
+  //         emgTime: JSON.parse(localStorage.getItem("EmgTime")),
+  //       },
+  //       GyroData: {
+  //         gyro: JSON.parse(localStorage.getItem("GyroData")),
+  //         gyroTime: JSON.parse(localStorage.getItem("GyroTime")),
+  //       },
+  //       PressureData: {
+  //         pressurePoint1: JSON.parse(localStorage.getItem("PressureData0")),
+  //         pressurePoint2: JSON.parse(localStorage.getItem("PressureData1")),
+  //         pressureTime: JSON.parse(localStorage.getItem("PressureTime")),
+  //       },
+  //     },
+  //   });
+  //   this.setState({ isOpen: false });
+  // };
+
   render() {
     Modal.setAppElement("#root");
     const customStyles = {
@@ -370,7 +436,6 @@ class RecordButton extends Component {
           padding: 20,
         }}
       >
-        <h4>Record mode: </h4>
         <label htmlFor="material-switch">
           <Switch
             checked={this.state.checked}
@@ -424,6 +489,26 @@ class RecordButton extends Component {
             </button>
           </form>{" "}
         </Modal>
+        {/* <Modal
+          show={isOpen}
+          onHide={closeModal}
+          backdrop="static"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Recording Notes</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Group >
+              <Form.Label>Recording Notes:</Form.Label>
+              <Form.Control type="text" onChange={this.handleChange} value={this.state.name} placeholder="name input" />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" type="submit" onClick={() => handleSubmit(this.state.name)}>
+              Submit
+            </Button>
+          </Modal.Footer>
+        </Modal> */}
       </div>
     );
   }

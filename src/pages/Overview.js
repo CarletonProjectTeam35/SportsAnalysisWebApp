@@ -1,11 +1,8 @@
 import React from "react";
-import RecordButton from "../components/RecordButton";
-import ClearButton from "../components/ClearButton/ClearButton";
-import DropdownDrills from "../components/DropdownDrills/DropdownDrills";
-import HockeySwitch from "../components/HockeySwitch/HockeySwitch";
-import DropdownNames from "../components/DropdownNames/DropdownNames";
-import TypeSwitch from "../components/TypeSwitch/TypeSwitch";
+import RecordButton from "../components/RecordButton/RecordButton";
+import ClearButton from "../components/ClearButton/ClearButton2";
 import DataGauge from "../components/Gauge/Gauge";
+import Dropdown2 from "../components/Dropdown/Dropdown";
 
 const Overview = () => {
   return (
@@ -14,15 +11,18 @@ const Overview = () => {
         style={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "space-around",
+          marginBottom: "1rem",
         }}
       >
-        <TypeSwitch />
-        <HockeySwitch />
-        <DropdownNames />
-        <DropdownDrills />
-        <RecordButton />
-        <ClearButton />
+        <Dropdown2 name="Environment"/>
+        <Dropdown2 name="Action"/>
+        <Dropdown2 name="Participant"/>
+        <Dropdown2 name="Drill"/>
+        <div style={{display: "flex", flexDirection: "row", marginLeft: "auto", paddingRight: "0.7rem"}}>
+          <p style={{lineHeight: "61px", paddingLeft: "30px"}}>Record: </p>
+          <RecordButton />
+          <ClearButton style={{height: "auto !important"}} />
+        </div>
       </div>
       <div style={{ marginLeft: "20%" }}>
         <DataGauge />
