@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import Switch from "react-switch";
-import { db } from "../firebase";
-import Modal from "react-modal";
+import { db } from "../../firebase";
+//import Modal from "react-modal";
+import { Button, Modal, Form } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 class RecordButton extends Component {
   constructor() {
@@ -21,65 +23,67 @@ class RecordButton extends Component {
       dataPointPressure1: [],
       dataTimePressure: [],
       modalOpened: false,
+      isOpen: false,
+      name: "",
+      notes: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
   }
-  handleSubmit = (event) => {
-    event.preventDefault();
-    this.toggleModal();
-
+  handleSubmit = () => {
+    this.setState({ isOpen: false });
+    console.log(this.state.notes);
     db.collection("Prod-Data").add({
-      switchModeHockey: localStorage.getItem("SwitchModeHockey"),
-      switchModeTraining: localStorage.getItem("SwitchModeTraining"),
-      drill: localStorage.getItem("Drill"),
-      participant: localStorage.getItem("Participant"),
-      notes: this.inputNode.value,
+      switchModeHockey: sessionStorage.getItem("SwitchModeHockey"),
+      switchModeTraining: sessionStorage.getItem("SwitchModeTraining"),
+      drill: sessionStorage.getItem("Drill"),
+      participant: sessionStorage.getItem("Participant"),
+      notes: this.state.notes,
       data: {
         EmgData: {
-          emg1: JSON.parse(localStorage.getItem("EmgData0")),
-          emg2: JSON.parse(localStorage.getItem("EmgData1")),
-          emg3: JSON.parse(localStorage.getItem("EmgData2")),
-          emg4: JSON.parse(localStorage.getItem("EmgData3")),
-          emg5: JSON.parse(localStorage.getItem("EmgData4")),
-          emg6: JSON.parse(localStorage.getItem("EmgData5")),
-          emgTime: JSON.parse(localStorage.getItem("EmgTime")),
+          emg1: JSON.parse(sessionStorage.getItem("EmgData0")),
+          emg2: JSON.parse(sessionStorage.getItem("EmgData1")),
+          emg3: JSON.parse(sessionStorage.getItem("EmgData2")),
+          emg4: JSON.parse(sessionStorage.getItem("EmgData3")),
+          emg5: JSON.parse(sessionStorage.getItem("EmgData4")),
+          emg6: JSON.parse(sessionStorage.getItem("EmgData5")),
+          emgTime: JSON.parse(sessionStorage.getItem("EmgTime")),
         },
         GyroData: {
-          gyro: JSON.parse(localStorage.getItem("GyroData")),
-          gyroTime: JSON.parse(localStorage.getItem("GyroTime")),
+          gyro: JSON.parse(sessionStorage.getItem("GyroData")),
+          gyroTime: JSON.parse(sessionStorage.getItem("GyroTime")),
         },
         PressureData: {
-          pressurePoint1: JSON.parse(localStorage.getItem("PressureData0")),
-          pressurePoint2: JSON.parse(localStorage.getItem("PressureData1")),
-          pressureTime: JSON.parse(localStorage.getItem("PressureTime")),
+          pressurePoint1: JSON.parse(sessionStorage.getItem("PressureData0")),
+          pressurePoint2: JSON.parse(sessionStorage.getItem("PressureData1")),
+          pressureTime: JSON.parse(sessionStorage.getItem("PressureTime")),
         },
       },
     });
     db.collection("Prod-Backup").add({
-      switchModeHockey: localStorage.getItem("SwitchModeHockey"),
-      switchModeTraining: localStorage.getItem("SwitchModeTraining"),
-      drill: localStorage.getItem("Drill"),
-      participant: localStorage.getItem("Participant"),
-      notes: this.inputNode.value,
+      switchModeHockey: sessionStorage.getItem("SwitchModeHockey"),
+      switchModeTraining: sessionStorage.getItem("SwitchModeTraining"),
+      drill: sessionStorage.getItem("Drill"),
+      participant: sessionStorage.getItem("Participant"),
+      notes: this.state.notes,
       data: {
         EmgData: {
-          emg1: JSON.parse(localStorage.getItem("EmgData0")),
-          emg2: JSON.parse(localStorage.getItem("EmgData1")),
-          emg3: JSON.parse(localStorage.getItem("EmgData2")),
-          emg4: JSON.parse(localStorage.getItem("EmgData3")),
-          emg5: JSON.parse(localStorage.getItem("EmgData4")),
-          emg6: JSON.parse(localStorage.getItem("EmgData5")),
-          emgTime: JSON.parse(localStorage.getItem("EmgTime")),
+          emg1: JSON.parse(sessionStorage.getItem("EmgData0")),
+          emg2: JSON.parse(sessionStorage.getItem("EmgData1")),
+          emg3: JSON.parse(sessionStorage.getItem("EmgData2")),
+          emg4: JSON.parse(sessionStorage.getItem("EmgData3")),
+          emg5: JSON.parse(sessionStorage.getItem("EmgData4")),
+          emg6: JSON.parse(sessionStorage.getItem("EmgData5")),
+          emgTime: JSON.parse(sessionStorage.getItem("EmgTime")),
         },
         GyroData: {
-          gyro: JSON.parse(localStorage.getItem("GyroData")),
-          gyroTime: JSON.parse(localStorage.getItem("GyroTime")),
+          gyro: JSON.parse(sessionStorage.getItem("GyroData")),
+          gyroTime: JSON.parse(sessionStorage.getItem("GyroTime")),
         },
         PressureData: {
-          pressurePoint1: JSON.parse(localStorage.getItem("PressureData0")),
-          pressurePoint2: JSON.parse(localStorage.getItem("PressureData1")),
-          pressureTime: JSON.parse(localStorage.getItem("PressureTime")),
+          pressurePoint1: JSON.parse(sessionStorage.getItem("PressureData0")),
+          pressurePoint2: JSON.parse(sessionStorage.getItem("PressureData1")),
+          pressureTime: JSON.parse(sessionStorage.getItem("PressureTime")),
         },
       },
     });
@@ -88,7 +92,7 @@ class RecordButton extends Component {
     this.setState((prevState) => ({ modalOpened: !prevState.modalOpened }));
   }
   componentDidMount() {
-    const storedValue = localStorage.getItem("RecordMode");
+    const storedValue = sessionStorage.getItem("RecordMode");
     if (storedValue === "Recording") {
       this.setState({ checked: true });
       this.handleChange(true);
@@ -98,50 +102,50 @@ class RecordButton extends Component {
   }
   handleChange(checked) {
     this.setState({ checked });
-    if (localStorage.getItem("EmgData0") != null) {
+    if (sessionStorage.getItem("EmgData0") != null) {
       this.setState({
-        dataPointEmg0: JSON.parse(localStorage.getItem("EmgData0")),
+        dataPointEmg0: JSON.parse(sessionStorage.getItem("EmgData0")),
       });
       this.setState({
-        dataPointEmg1: JSON.parse(localStorage.getItem("EmgData1")),
+        dataPointEmg1: JSON.parse(sessionStorage.getItem("EmgData1")),
       });
       this.setState({
-        dataPointEmg2: JSON.parse(localStorage.getItem("EmgData2")),
+        dataPointEmg2: JSON.parse(sessionStorage.getItem("EmgData2")),
       });
       this.setState({
-        dataPointEmg3: JSON.parse(localStorage.getItem("EmgData3")),
+        dataPointEmg3: JSON.parse(sessionStorage.getItem("EmgData3")),
       });
       this.setState({
-        dataPointEmg4: JSON.parse(localStorage.getItem("EmgData4")),
+        dataPointEmg4: JSON.parse(sessionStorage.getItem("EmgData4")),
       });
       this.setState({
-        dataPointEmg5: JSON.parse(localStorage.getItem("EmgData5")),
+        dataPointEmg5: JSON.parse(sessionStorage.getItem("EmgData5")),
       });
       this.setState({
-        dataTimeEmg: JSON.parse(localStorage.getItem("EmgTime")),
-      });
-    }
-    if (localStorage.getItem("GyroData") != null) {
-      this.setState({
-        dataPointGyro: JSON.parse(localStorage.getItem("GyroData")),
-      });
-      this.setState({
-        dataTimeGyro: JSON.parse(localStorage.getItem("GyroTime")),
+        dataTimeEmg: JSON.parse(sessionStorage.getItem("EmgTime")),
       });
     }
-    if (localStorage.getItem("PressureData0") != null) {
+    if (sessionStorage.getItem("GyroData") != null) {
       this.setState({
-        dataPointPressure0: JSON.parse(localStorage.getItem("PressureData0")),
+        dataPointGyro: JSON.parse(sessionStorage.getItem("GyroData")),
       });
       this.setState({
-        dataPointPressure1: JSON.parse(localStorage.getItem("PressureData1")),
-      });
-      this.setState({
-        dataTimePressure: JSON.parse(localStorage.getItem("PressureTime")),
+        dataTimeGyro: JSON.parse(sessionStorage.getItem("GyroTime")),
       });
     }
-    if (localStorage.getItem("DataCleared") == 1) {
-      localStorage.setItem("DataCleared", 0);
+    if (sessionStorage.getItem("PressureData0") != null) {
+      this.setState({
+        dataPointPressure0: JSON.parse(sessionStorage.getItem("PressureData0")),
+      });
+      this.setState({
+        dataPointPressure1: JSON.parse(sessionStorage.getItem("PressureData1")),
+      });
+      this.setState({
+        dataTimePressure: JSON.parse(sessionStorage.getItem("PressureTime")),
+      });
+    }
+    if (sessionStorage.getItem("DataCleared") == 1) {
+      sessionStorage.setItem("DataCleared", 0);
       this.setState({ dataPointEmg0: [] });
       this.setState({ dataPointEmg1: [] });
       this.setState({ dataPointEmg2: [] });
@@ -160,17 +164,17 @@ class RecordButton extends Component {
     let tempTimePressure;
     if (checked) {
       if (
-        localStorage.getItem("SwitchModeHockey") == null ||
-        localStorage.getItem("SwitchModeTraining") == null ||
-        localStorage.getItem("Drill") == null ||
-        localStorage.getItem("Participant") == null
+        sessionStorage.getItem("SwitchModeHockey") == null ||
+        sessionStorage.getItem("SwitchModeTraining") == null ||
+        sessionStorage.getItem("Drill") == null ||
+        sessionStorage.getItem("Participant") == null
       ) {
         alert(
           "Please fill in all settings for recording before pressing the record button."
         );
         this.setState({ checked: false });
       } else {
-        localStorage.setItem("RecordMode", "Recording");
+        sessionStorage.setItem("RecordMode", "Recording");
         this.interval = setInterval(() => {
           fetch(
             "https://api.thingspeak.com/channels/1636837/feeds.json?api_key=3AGBX7JRF6XLVEBB&results=1"
@@ -221,31 +225,31 @@ class RecordButton extends Component {
                   ),
                 });
 
-                localStorage.setItem(
+                sessionStorage.setItem(
                   "EmgData0",
                   JSON.stringify(this.state.dataPointEmg0)
                 );
-                localStorage.setItem(
+                sessionStorage.setItem(
                   "EmgData1",
                   JSON.stringify(this.state.dataPointEmg1)
                 );
-                localStorage.setItem(
+                sessionStorage.setItem(
                   "EmgData2",
                   JSON.stringify(this.state.dataPointEmg2)
                 );
-                localStorage.setItem(
+                sessionStorage.setItem(
                   "EmgData3",
                   JSON.stringify(this.state.dataPointEmg3)
                 );
-                localStorage.setItem(
+                sessionStorage.setItem(
                   "EmgData4",
                   JSON.stringify(this.state.dataPointEmg4)
                 );
-                localStorage.setItem(
+                sessionStorage.setItem(
                   "EmgData5",
                   JSON.stringify(this.state.dataPointEmg5)
                 );
-                localStorage.setItem(
+                sessionStorage.setItem(
                   "EmgTime",
                   JSON.stringify(this.state.dataTimeEmg)
                 );
@@ -280,11 +284,11 @@ class RecordButton extends Component {
                   ),
                 });
 
-                localStorage.setItem(
+                sessionStorage.setItem(
                   "GyroData",
                   JSON.stringify(this.state.dataPointGyro)
                 );
-                localStorage.setItem(
+                sessionStorage.setItem(
                   "GyroTime",
                   JSON.stringify(this.state.dataTimeGyro)
                 );
@@ -327,15 +331,15 @@ class RecordButton extends Component {
                   ),
                 });
 
-                localStorage.setItem(
+                sessionStorage.setItem(
                   "PressureData0",
                   JSON.stringify(this.state.dataPointPressure0)
                 );
-                localStorage.setItem(
+                sessionStorage.setItem(
                   "PressureData1",
                   JSON.stringify(this.state.dataPointPressure1)
                 );
-                localStorage.setItem(
+                sessionStorage.setItem(
                   "PressureTime",
                   JSON.stringify(this.state.dataTimePressure)
                 );
@@ -344,14 +348,16 @@ class RecordButton extends Component {
         }, 2000);
       }
     } else if (!checked) {
-      this.toggleModal();
-      localStorage.setItem("RecordMode", "NotRecording");
+      this.setState({ isOpen: true });
+      sessionStorage.setItem("RecordMode", "NotRecording");
       clearInterval(this.interval);
     }
   }
 
+  closeModal = () => this.setState({ isOpen: false });
+
   render() {
-    Modal.setAppElement("#root");
+    // Modal.setAppElement("#root");
     const customStyles = {
       content: {
         height: "25%",
@@ -370,7 +376,6 @@ class RecordButton extends Component {
           padding: 20,
         }}
       >
-        <h4>Record mode: </h4>
         <label htmlFor="material-switch">
           <Switch
             checked={this.state.checked}
@@ -388,7 +393,7 @@ class RecordButton extends Component {
             id="material-switch"
           />
         </label>
-        <Modal
+        {/* <Modal
           style={customStyles}
           // className={{ base: [style.base] }}
           //  overlayClassName={{ base: [style.overlayBase] }}
@@ -423,6 +428,36 @@ class RecordButton extends Component {
               Add note to recording
             </button>
           </form>{" "}
+        </Modal> */}
+        <Modal
+          show={this.state.isOpen}
+          onHide={() => this.handleSubmit()}
+          backdrop="static"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Recording Notes</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Group>
+              <Form.Label>Recording Notes:</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                type="text"
+                onChange={(e) => this.setState({ notes: e.target.value })}
+                placeholder="Inputs notes here"
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="primary"
+              type="submit"
+              onClick={() => this.handleSubmit()}
+            >
+              Submit
+            </Button>
+          </Modal.Footer>
         </Modal>
       </div>
     );

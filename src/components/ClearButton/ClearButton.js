@@ -1,18 +1,23 @@
 import React from "react";
 import Popup from "reactjs-popup";
 import "./ClearButton.css";
-//
+import { Button, Modal } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const contentStyle = {
-  maxWidth: "600px",
-  width: "90%",
-};
+// const contentStyle = {
+//   maxWidth: "600px",
+//   width: "90%",
+// };
 
 const CustomModal = () => (
   <Popup
-    trigger={<button className="button"> Clear Data </button>}
+    trigger={
+      <Button variant="primary" className="button">
+        {" "}
+        Clear Data{" "}
+      </Button>
+    }
     modal
-    contentStyle={contentStyle}
   >
     {(close) => (
       <div className="modal">
@@ -33,19 +38,19 @@ const CustomModal = () => (
           <button
             className="button"
             onClick={() => {
-              localStorage.removeItem("EmgData0");
-              localStorage.removeItem("EmgData1");
-              localStorage.removeItem("EmgData2");
-              localStorage.removeItem("EmgData3");
-              localStorage.removeItem("EmgData4");
-              localStorage.removeItem("EmgData5");
-              localStorage.removeItem("EmgTime");
-              localStorage.removeItem("PressureData0");
-              localStorage.removeItem("PressureData1");
-              localStorage.removeItem("PressureTime");
-              localStorage.removeItem("GyroData");
-              localStorage.removeItem("GyroTime");
-              localStorage.setItem("DataCleared", 1);
+              sessionStorage.removeItem("EmgData0");
+              sessionStorage.removeItem("EmgData1");
+              sessionStorage.removeItem("EmgData2");
+              sessionStorage.removeItem("EmgData3");
+              sessionStorage.removeItem("EmgData4");
+              sessionStorage.removeItem("EmgData5");
+              sessionStorage.removeItem("EmgTime");
+              sessionStorage.removeItem("PressureData0");
+              sessionStorage.removeItem("PressureData1");
+              sessionStorage.removeItem("PressureTime");
+              sessionStorage.removeItem("GyroData");
+              sessionStorage.removeItem("GyroTime");
+              sessionStorage.setItem("DataCleared", 1);
 
               close();
             }}

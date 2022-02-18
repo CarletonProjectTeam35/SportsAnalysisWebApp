@@ -1,65 +1,96 @@
-import React, { Component } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./DataTable.css";
-import Table from "react-bootstrap/Table";
-import TableScrollbar from "react-table-scrollbar";
-
+import React, { useState, Component } from "react";
+import { render } from "react-dom";
+import { AgGridReact, AgGridColumn } from "ag-grid-react";
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 class DataTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      graphData: [],
-      graphTime: [],
-      graphDataParsed: [],
-      title: this.props.sensor,
+      tableColour: this.props.colour,
+      tableTitleSkating: this.props.titleSkating,
+      tableTitleShooting: this.props.titleShooting,
+      tableTitle: this.props.title,
+      sensor: this.props.sensor,
+      time: this.props.time,
+      title: this.props.time,
+      data: [],
+      columnDefs: [
+        {
+          headerName: "Timestamp",
+          field: "timeStamp",
+          width: 210,
+          sortable: true,
+          filter: true,
+        },
+        {
+          field: "DataPoint",
+          width: 115,
+          sortable: true,
+        },
+      ],
+      defaultColDef: {
+        resizable: true,
+      },
+      rowSelection: "multiple",
+      rowData: null,
     };
   }
+  onGridReady = (params) => {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+  };
 
   componentDidMount() {
     this.interval = setInterval(() => {
-      this.setState({
-        graphData: JSON.parse(localStorage.getItem("EmgData0")),
-      });
-      this.setState({
-        graphTime: JSON.parse(localStorage.getItem("EmgTime")),
-      });
-      this.state.graphDataParsed.push({
-        timeStamp: this.state.graphTime[this.state.graphTime.length - 1],
-        dataPoint: this.state.graphData[this.state.graphData.length - 1],
-      });
-    }, 4000);
-  }
+      if (window.location.pathname == "/emg") {
+        if (sessionStorage.getItem("SwitchModeHockey") === "Skating") {
+          this.setState({ tableTitle: this.state.tableTitleSkating });
+        } else {
+          this.setState({ tableTitle: this.state.tableTitleShooting });
+        }
+      }
 
+      let dataFetch = [];
+      let timeFetch = [];
+      if (JSON.parse(sessionStorage.getItem(this.state.sensor) != null)) {
+        dataFetch = JSON.parse(sessionStorage.getItem(this.state.sensor));
+        timeFetch = JSON.parse(sessionStorage.getItem(this.state.time));
+      }
+      this.setState({
+        data: dataFetch.map(function (x, i) {
+          return { DataPoint: x, timeStamp: timeFetch[i] };
+        }),
+      });
+    }, 2000);
+  }
   componentWillUnmount() {
     clearInterval(this.interval);
   }
 
-  renderDataPoint(point, index) {
-    return (
-      <tr key={index}>
-        <td className="cell-text">{point.timeStamp}</td>
-        <td className="cell-text">{point.dataPoint}</td>
-      </tr>
-    );
-  }
-
   render() {
     return (
-      <div style={{ marginTop: "50px" }}>
-        <h5 className="title"> {this.state.title}</h5>
-        <TableScrollbar rows={5}>
-          <Table striped condensed hover className="table-style">
-            <thead>
-              <tr>
-                <th className="header">Timestamp</th>
-                <th className="header">Data Point</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.graphDataParsed.map(this.renderDataPoint)}
-            </tbody>
-          </Table>
-        </TableScrollbar>
+      <div
+        className="ag-theme-alpine"
+        style={{ height: 300, width: 300, margin: 5 }}
+      >
+        <h5
+          style={{
+            textAlign: "center",
+            backgroundColor: `${this.state.tableColour}`,
+            padding: 10,
+          }}
+        >
+          {this.state.tableTitle}
+        </h5>
+        <AgGridReact
+          columnDefs={this.state.columnDefs}
+          defaultColDef={this.state.defaultColDef}
+          suppressRowClickSelection={true}
+          rowSelection={this.state.rowSelection}
+          rowData={this.state.data}
+          onGridReady={this.onGridReady}
+        ></AgGridReact>
       </div>
     );
   }

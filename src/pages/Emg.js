@@ -1,12 +1,10 @@
 import React from "react";
-import DataGraph from "../components/Graph";
-import RecordButton from "../components/RecordButton";
-import ClearButton from "../components/ClearButton/ClearButton";
-import DropdownDrills from "../components/DropdownDrills/DropdownDrills";
-import DropdownNames from "../components/DropdownNames/DropdownNames";
-import HockeySwitch from "../components/HockeySwitch/HockeySwitch";
-import TypeSwitch from "../components/TypeSwitch/TypeSwitch";
-import DataTable2 from "../components/DataTable/DataTable2";
+import DataGraph from "../components/Graph/Graph";
+import RecordButton from "../components/RecordButton/RecordButton";
+import ClearButton from "../components/ClearButton/ClearButton2";
+import DataTable from "../components/DataTable/DataTable";
+import Dropdown2 from "../components/Dropdown/Dropdown";
+
 const Emg = () => {
   return (
     <div>
@@ -14,16 +12,25 @@ const Emg = () => {
         style={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "space-around",
-          marginBottom: -50,
+          marginBottom: "1rem",
         }}
       >
-        <TypeSwitch />
-        <HockeySwitch />
-        <DropdownNames />
-        <DropdownDrills />
-        <RecordButton />
-        <ClearButton />
+        <Dropdown2 name="Environment" />
+        <Dropdown2 name="Action" />
+        <Dropdown2 name="Participant" />
+        <Dropdown2 name="Drill" />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            marginLeft: "auto",
+            paddingRight: "0.7rem",
+          }}
+        >
+          <p style={{ lineHeight: "61px", paddingLeft: "30px" }}>Record: </p>
+          <RecordButton />
+          <ClearButton style={{ height: "auto !important" }} />
+        </div>
       </div>
 
       <DataGraph
@@ -52,7 +59,7 @@ const Emg = () => {
           marginTop: 10,
         }}
       >
-        <DataTable2
+        <DataTable
           sensor="EmgData0"
           time="EmgTime"
           titleSkating="EMG sensor skating 1"
@@ -60,7 +67,7 @@ const Emg = () => {
           colour="rgb(255, 99, 132)"
         />
 
-        <DataTable2
+        <DataTable
           sensor="EmgData1"
           time="EmgTime"
           titleSkating="EMG sensor skating 2"
@@ -68,7 +75,7 @@ const Emg = () => {
           colour="rgb(53, 162, 235)"
         />
 
-        <DataTable2
+        <DataTable
           sensor="EmgData2"
           time="EmgTime"
           titleSkating="EMG sensor skating 3"
@@ -76,7 +83,7 @@ const Emg = () => {
           colour="rgb(50,205,50)"
         />
 
-        <DataTable2
+        <DataTable
           sensor="EmgData3"
           time="EmgTime"
           titleSkating="EMG sensor skating 4"
@@ -84,7 +91,7 @@ const Emg = () => {
           colour="rgb(252, 118, 5 )"
         />
 
-        <DataTable2
+        <DataTable
           sensor="EmgData4"
           time="EmgTime"
           titleSkating="EMG sensor skating 5"
@@ -92,7 +99,7 @@ const Emg = () => {
           colour="rgb(187, 51, 255)"
         />
 
-        <DataTable2
+        <DataTable
           sensor="EmgData5"
           time="EmgTime"
           titleSkating="EMG sensor skating 6"

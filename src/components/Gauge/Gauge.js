@@ -22,37 +22,37 @@ class DataGauge extends Component {
 
   componentDidMount() {
     this.interval = setInterval(() => {
-      if (localStorage.getItem("EmgData0") != null) {
+      if (sessionStorage.getItem("EmgData0") != null) {
         this.setState({
-          emgData0: parseInt(JSON.parse(localStorage.getItem("EmgData0"))[0]),
+          emgData0: parseInt(JSON.parse(sessionStorage.getItem("EmgData0"))[0]),
         });
         this.setState({
-          emgData1: parseInt(JSON.parse(localStorage.getItem("EmgData1"))[0]),
+          emgData1: parseInt(JSON.parse(sessionStorage.getItem("EmgData1"))[0]),
         });
         this.setState({
-          emgData2: parseInt(JSON.parse(localStorage.getItem("EmgData2"))[0]),
+          emgData2: parseInt(JSON.parse(sessionStorage.getItem("EmgData2"))[0]),
         });
         this.setState({
-          emgData3: parseInt(JSON.parse(localStorage.getItem("EmgData3"))[0]),
+          emgData3: parseInt(JSON.parse(sessionStorage.getItem("EmgData3"))[0]),
         });
         this.setState({
-          emgData4: parseInt(JSON.parse(localStorage.getItem("EmgData4"))[0]),
+          emgData4: parseInt(JSON.parse(sessionStorage.getItem("EmgData4"))[0]),
         });
         this.setState({
-          emgData5: parseInt(JSON.parse(localStorage.getItem("EmgData5"))[0]),
+          emgData5: parseInt(JSON.parse(sessionStorage.getItem("EmgData5"))[0]),
         });
         this.setState({
           pressureData0: parseInt(
-            JSON.parse(localStorage.getItem("PressureData0"))[0]
+            JSON.parse(sessionStorage.getItem("PressureData0"))[0]
           ),
         });
         this.setState({
           pressureData1: parseInt(
-            JSON.parse(localStorage.getItem("PressureData1"))[0]
+            JSON.parse(sessionStorage.getItem("PressureData1"))[0]
           ),
         });
         this.setState({
-          gyroData: parseInt(JSON.parse(localStorage.getItem("GyroData"))[0]),
+          gyroData: parseInt(JSON.parse(sessionStorage.getItem("GyroData"))[0]),
         });
       } else {
         this.setState({

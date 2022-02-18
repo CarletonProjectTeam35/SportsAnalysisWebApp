@@ -9,7 +9,7 @@ class TypeSwitch extends Component {
   }
 
   componentDidMount() {
-    const storedValue = localStorage.getItem("SwitchModeTraining");
+    const storedValue = sessionStorage.getItem("SwitchModeTraining");
     if (storedValue == "Off Ice") {
       this.setState({ checked: true });
     } else if (storedValue == "On Ice") {
@@ -20,9 +20,9 @@ class TypeSwitch extends Component {
   handleChange(checked) {
     this.setState({ checked });
     if (checked) {
-      localStorage.setItem("SwitchModeTraining", "Off Ice");
+      sessionStorage.setItem("SwitchModeTraining", "Off Ice");
     } else if (!checked) {
-      localStorage.setItem("SwitchModeTraining", "On Ice");
+      sessionStorage.setItem("SwitchModeTraining", "On Ice");
     }
   }
 

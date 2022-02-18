@@ -9,15 +9,13 @@ const Navbar = () => {
 
   const onClick = () => {
     if (window.confirm("Are you sure you want to logout?")) {
+      sessionStorage.clear();
       logoutUser();
     }
   };
   return (
     <nav className="NavbarItems">
-      <h1 style={{ color: "white", paddingLeft: 10 }}>
-        {" "}
-        Hockey Data Analysis App
-      </h1>
+      <h1 style={{ color: "white", paddingLeft: 10 }}> The Puck Stats </h1>
       <div
         className="menu-icon"
         onClick={() => setState({ clicked: !state.clicked })}
