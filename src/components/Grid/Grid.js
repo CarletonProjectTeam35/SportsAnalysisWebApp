@@ -148,7 +148,7 @@ class DataGrid extends Component {
 
   cellClickHandler = (event) => {
     if (event.column.colId === "data") {
-      window.location.href = `/#/data-history/${event.data.recordingId}`;
+      window.location.href = `/data-history/${event.data.recordingId}`;
     } else if (event.column.colId === "csvFile") {
       this.convertToCsv(event.data);
     } else if (event.column.colId === "notes") {
@@ -171,19 +171,36 @@ class DataGrid extends Component {
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((element) => {
-          this.setState({
-            data: this.state.data.concat({
-              recordingId: element.id,
-              participant: element.data().participant,
-              hockeyMode: element.data().switchModeHockey,
-              time: element.data().data.EmgData.emgTime,
-              drill: element.data().drill,
-              trainingMode: element.data().switchModeTraining,
-              data: "Click here to see a data breakdown",
-              csvFile: "Click here to download csv for this recording",
-              notes: element.data().notes,
-            }),
-          });
+          if (element.data().data.EmgData.emgTime != null) {
+            this.setState({
+              data: this.state.data.concat({
+                recordingId: element.id,
+                participant: element.data().participant,
+                hockeyMode: element.data().switchModeHockey,
+                time: element.data().data.EmgData.emgTime,
+                drill: element.data().drill,
+                trainingMode: element.data().switchModeTraining,
+                data: "Click here to see a data breakdown",
+                csvFile: "Click here to download csv for this recording",
+                notes: element.data().notes,
+              }),
+            });
+          }
+          // } else {
+          //   this.setState({
+          //     data: this.state.data.concat({
+          //       recordingId: element.id,
+          //       participant: element.data().participant,
+          //       hockeyMode: element.data().switchModeHockey,
+          //       time: element.data().data.EmgData.emgTime[0],
+          //       drill: element.data().drill,
+          //       trainingMode: element.data().switchModeTraining,
+          //       data: "Click here to see a data breakdown",
+          //       csvFile: "Click here to download csv for this recording",
+          //       notes: element.data().notes,
+          //     }),
+          //   });
+          // }
         });
       });
   }

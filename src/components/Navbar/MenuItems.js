@@ -1,27 +1,27 @@
 export const MenuItems = [
   {
     title: "Overview",
-    url: "/#/",
+    url: "/",
     cName: "nav-links",
   },
   {
     title: "EMG",
-    url: "/#/emg",
+    url: "/emg",
     cName: "nav-links",
   },
   {
     title: "Gyro",
-    url: "/#/gyro",
+    url: "/gyro",
     cName: "nav-links",
   },
   {
     title: "Pressure Plate",
-    url: "/#/pressure-plate",
+    url: "/pressure-plate",
     cName: "nav-links",
   },
   {
     title: "Data History",
-    url: "/#/data-history",
+    url: "/data-history",
     cName: "nav-links",
   },
 ];

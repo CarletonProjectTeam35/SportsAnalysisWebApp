@@ -23,56 +23,56 @@ class DataGraph extends Component {
   componentDidMount() {
     this.interval = setInterval(() => {
       if (window.location.pathname == "/emg") {
-        if (localStorage.getItem("SwitchModeHockey") === "Skating") {
+        if (sessionStorage.getItem("SwitchModeHockey") === "Skating") {
           this.setState({ labels: this.state.sensors.slice(0, 6) });
         } else {
           this.setState({ labels: this.state.sensors.slice(6, 12) });
         }
 
         this.setState({
-          graphData0: JSON.parse(localStorage.getItem("EmgData0")),
+          graphData0: JSON.parse(sessionStorage.getItem("EmgData0")),
         });
         this.setState({
-          graphData1: JSON.parse(localStorage.getItem("EmgData1")),
+          graphData1: JSON.parse(sessionStorage.getItem("EmgData1")),
         });
         this.setState({
-          graphData2: JSON.parse(localStorage.getItem("EmgData2")),
-        });
-
-        this.setState({
-          graphData3: JSON.parse(localStorage.getItem("EmgData3")),
+          graphData2: JSON.parse(sessionStorage.getItem("EmgData2")),
         });
 
         this.setState({
-          graphData4: JSON.parse(localStorage.getItem("EmgData4")),
+          graphData3: JSON.parse(sessionStorage.getItem("EmgData3")),
         });
 
         this.setState({
-          graphData5: JSON.parse(localStorage.getItem("EmgData5")),
+          graphData4: JSON.parse(sessionStorage.getItem("EmgData4")),
+        });
+
+        this.setState({
+          graphData5: JSON.parse(sessionStorage.getItem("EmgData5")),
         });
         this.setState({
-          graphTime: JSON.parse(localStorage.getItem("EmgTime")),
+          graphTime: JSON.parse(sessionStorage.getItem("EmgTime")),
         });
       }
       if (window.location.pathname == "/gyro") {
         this.setState({ labels: this.state.sensors });
         this.setState({
-          graphData0: JSON.parse(localStorage.getItem("GyroData")),
+          graphData0: JSON.parse(sessionStorage.getItem("GyroData")),
         });
         this.setState({
-          graphTime: JSON.parse(localStorage.getItem("GyroTime")),
+          graphTime: JSON.parse(sessionStorage.getItem("GyroTime")),
         });
       }
       if (window.location.pathname == "/pressure-plate") {
         this.setState({ labels: this.state.sensors });
         this.setState({
-          graphData0: JSON.parse(localStorage.getItem("PressureData0")),
+          graphData0: JSON.parse(sessionStorage.getItem("PressureData0")),
         });
         this.setState({
-          graphData1: JSON.parse(localStorage.getItem("PressureData1")),
+          graphData1: JSON.parse(sessionStorage.getItem("PressureData1")),
         });
         this.setState({
-          graphTime: JSON.parse(localStorage.getItem("PressureTime")),
+          graphTime: JSON.parse(sessionStorage.getItem("PressureTime")),
         });
       }
     }, 2000);

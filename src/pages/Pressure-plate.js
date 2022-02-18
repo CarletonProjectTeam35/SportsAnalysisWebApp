@@ -1,12 +1,9 @@
 import React from "react";
-import DataGraph from "../components/Graph";
-import RecordButton from "../components/RecordButton";
-import ClearButton from "../components/ClearButton/ClearButton";
-import DropdownDrills from "../components/DropdownDrills/DropdownDrills";
-import DropdownNames from "../components/DropdownNames/DropdownNames";
-import HockeySwitch from "../components/HockeySwitch/HockeySwitch";
-import TypeSwitch from "../components/TypeSwitch/TypeSwitch";
-import DataTable2 from "../components/DataTable/DataTable2";
+import DataGraph from "../components/Graph/Graph";
+import RecordButton from "../components/RecordButton/RecordButton";
+import ClearButton from "../components/ClearButton/ClearButton2";
+import DataTable from "../components/DataTable/DataTable";
+import Dropdown2 from "../components/Dropdown/Dropdown";
 
 const PressurePlate = () => {
   return (
@@ -15,16 +12,25 @@ const PressurePlate = () => {
         style={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "space-around",
-          marginBottom: -50,
+          marginBottom: "1rem",
         }}
       >
-        <TypeSwitch />
-        <HockeySwitch />
-        <DropdownNames />
-        <DropdownDrills />
-        <RecordButton />
-        <ClearButton />
+        <Dropdown2 name="Environment" />
+        <Dropdown2 name="Action" />
+        <Dropdown2 name="Participant" />
+        <Dropdown2 name="Drill" />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            marginLeft: "auto",
+            paddingRight: "0.7rem",
+          }}
+        >
+          <p style={{ lineHeight: "61px", paddingLeft: "30px" }}>Record: </p>
+          <RecordButton />
+          <ClearButton style={{ height: "auto !important" }} />
+        </div>
       </div>
       <DataGraph
         graphTitle="Pressure Plate Sensors"
@@ -40,13 +46,13 @@ const PressurePlate = () => {
           marginTop: 10,
         }}
       >
-        <DataTable2
+        <DataTable
           sensor="PressureData0"
           time="PressureTime"
           title="Pressure sensor 1"
           colour="rgb(255, 99, 132)"
         />
-        <DataTable2
+        <DataTable
           sensor="PressureData1"
           time="PressureTime"
           title="Pressure sensor 2"

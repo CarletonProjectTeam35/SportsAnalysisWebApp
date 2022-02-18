@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 class SingleGraph extends Component {
   constructor(props) {
     super(props);
