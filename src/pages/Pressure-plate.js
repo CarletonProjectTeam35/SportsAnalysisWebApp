@@ -3,7 +3,7 @@ import DataGraph from "../components/Graph/Graph";
 import RecordButton from "../components/RecordButton/RecordButton";
 import ClearButton from "../components/ClearButton/ClearButton";
 import DataTable from "../components/DataTable/DataTable";
-import Dropdown from "../components/Dropdown/Dropdown";
+import Drop from "../components/Dropdown/Dropdown";
 
 const PressurePlate = () => {
   return (
@@ -15,10 +15,10 @@ const PressurePlate = () => {
           marginBottom: "1rem",
         }}
       >
-        <Dropdown name="Environment" />
-        <Dropdown name="Action" />
-        <Dropdown name="Participant" />
-        <Dropdown name="Drill" />
+        <Drop name="Environment" />
+        <Drop name="Action" />
+        <Drop name="Participant" />
+        <Drop name="Drill" />
         <div
           style={{
             display: "flex",

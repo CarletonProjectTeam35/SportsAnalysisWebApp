@@ -4,7 +4,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Dropdown.css";
 
-class Dropdown extends Component {
+class Drop extends Component {
   constructor(props) {
     super(props);
 
@@ -165,4 +165,4 @@ class Dropdown extends Component {
   }
 }
 
-export default Dropdown;
+export default Drop;
