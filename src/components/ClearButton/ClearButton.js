@@ -1,66 +1,61 @@
-import React from "react";
-import Popup from "reactjs-popup";
-import "./ClearButton.css";
-import { Button, Modal } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, { Component } from "react";
+import { Modal, Button } from "react-bootstrap";
 
-// const contentStyle = {
-//   maxWidth: "600px",
-//   width: "90%",
-// };
+class ClearButton extends Component {
+  state = {
+    isOpen: false,
+  };
 
-const CustomModal = () => (
-  <Popup
-    trigger={
-      <Button variant="primary" className="button">
-        {" "}
-        Clear Data{" "}
-      </Button>
-    }
-    modal
-  >
-    {(close) => (
-      <div className="modal">
-        <a className="close" onClick={close}>
-          &times;
-        </a>
-        <div className="header"> Clear Data? </div>
-        <div className="content"> Are you sure you want to clear the data?</div>
-        <div className="actions">
-          <button
-            className="button"
-            onClick={() => {
-              close();
-            }}
-          >
-            Cancel
-          </button>
-          <button
-            className="button"
-            onClick={() => {
-              sessionStorage.removeItem("EmgData0");
-              sessionStorage.removeItem("EmgData1");
-              sessionStorage.removeItem("EmgData2");
-              sessionStorage.removeItem("EmgData3");
-              sessionStorage.removeItem("EmgData4");
-              sessionStorage.removeItem("EmgData5");
-              sessionStorage.removeItem("EmgTime");
-              sessionStorage.removeItem("PressureData0");
-              sessionStorage.removeItem("PressureData1");
-              sessionStorage.removeItem("PressureTime");
-              sessionStorage.removeItem("GyroData");
-              sessionStorage.removeItem("GyroTime");
-              sessionStorage.setItem("DataCleared", 1);
+  openModal = () => this.setState({ isOpen: true });
+  closeModal = () => this.setState({ isOpen: false });
+  closeAndClear = () => {
+    sessionStorage.removeItem("EmgData0");
+    sessionStorage.removeItem("EmgData1");
+    sessionStorage.removeItem("EmgData2");
+    sessionStorage.removeItem("EmgData3");
+    sessionStorage.removeItem("EmgData4");
+    sessionStorage.removeItem("EmgData5");
+    sessionStorage.removeItem("EmgTime");
+    sessionStorage.removeItem("PressureData0");
+    sessionStorage.removeItem("PressureData1");
+    sessionStorage.removeItem("PressureTime");
+    sessionStorage.removeItem("GyroData");
+    sessionStorage.removeItem("GyroTime");
+    sessionStorage.setItem("DataCleared", 1);
+    this.setState({ isOpen: false });
+  };
 
-              close();
-            }}
+  render() {
+    return (
+      <>
+        <div
+          data-testid="ClearButton"
+          className="d-flex align-items-center justify-content-center"
+        >
+          <Button
+            data-testid="ButtonOne"
+            variant="primary"
+            onClick={this.openModal}
           >
             Clear Data
-          </button>
+          </Button>
         </div>
-      </div>
-    )}
-  </Popup>
-);
+        <Modal show={this.state.isOpen} onHide={this.closeModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Clear Data</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Are you sure you want to clear the currently displayed data?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.closeAndClear}>
+              Clear
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    );
+  }
+}
 
-export default CustomModal;
+export default ClearButton;

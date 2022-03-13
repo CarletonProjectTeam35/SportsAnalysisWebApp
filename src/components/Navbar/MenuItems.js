@@ -24,4 +24,5 @@ export const MenuItems = [
     url: "/data-history",
     cName: "nav-links",
   },
+  { title: "Data Analysis", url: "/data-analysis", cName: "nav-links" },
 ];
