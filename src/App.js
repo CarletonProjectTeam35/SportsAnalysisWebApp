@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Overview from "./pages/Overview";
 import Emg from "./pages/Emg";
 import Gyro from "./pages/Gyro";
+import DataAnalysis from "./pages/Data-analysis";
 import PressurePlate from "./pages/Pressure-plate";
 import DataHistory from "./pages/Data-history";
 import SingleDataHistory from "./pages/SingleDataHistory";
@@ -44,6 +45,11 @@ function App() {
                       exact
                       path="/data-history/:dataId"
                       element={<SingleDataHistory />}
+                    ></Route>
+                    <Route
+                      exact
+                      path="/data-analysis"
+                      element={<DataAnalysis />}
                     ></Route>
                   </Routes>
                 </div>

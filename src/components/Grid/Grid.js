@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { AgGridReact, AgGridColumn } from "ag-grid-react";
+import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import { db } from "../../firebase";
@@ -77,7 +77,9 @@ class DataGrid extends Component {
   }
   onRemoveSelected = () => {
     const selectedData = this.gridApi.getSelectedRows();
+    console.log(selectedData);
     const res = this.gridApi.applyTransaction({ remove: selectedData });
+    console.log(res);
     res.remove.forEach(function (rowNode) {
       db.collection("Prod-Data").doc(rowNode.data.recordingId).delete();
     });
@@ -171,21 +173,20 @@ class DataGrid extends Component {
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((element) => {
-          if (element.data().data.EmgData.emgTime != null) {
-            this.setState({
-              data: this.state.data.concat({
-                recordingId: element.id,
-                participant: element.data().participant,
-                hockeyMode: element.data().switchModeHockey,
-                time: element.data().data.EmgData.emgTime,
-                drill: element.data().drill,
-                trainingMode: element.data().switchModeTraining,
-                data: "Click here to see a data breakdown",
-                csvFile: "Click here to download csv for this recording",
-                notes: element.data().notes,
-              }),
-            });
-          }
+          this.setState({
+            data: this.state.data.concat({
+              recordingId: element.id,
+              participant: element.data().participant,
+              hockeyMode: element.data().switchModeHockey,
+              time: element.data().data.EmgData.emgTime,
+              drill: element.data().drill,
+              trainingMode: element.data().switchModeTraining,
+              data: "Click here to see a data breakdown",
+              csvFile: "Click here to download csv for this recording",
+              notes: element.data().notes,
+            }),
+          });
+
           // } else {
           //   this.setState({
           //     data: this.state.data.concat({

@@ -182,6 +182,7 @@ class RecordButton extends Component {
             .then((response) => response.json())
             .then((data) => data.feeds)
             .then((newData) => {
+              console.log(newData);
               tempTimeEmg = new Date(newData[0].created_at).toString();
               if (
                 this.state.dataTimeEmg.length == 0 ||

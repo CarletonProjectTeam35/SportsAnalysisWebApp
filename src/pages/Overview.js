@@ -2,7 +2,7 @@ import React from "react";
 import RecordButton from "../components/RecordButton/RecordButton";
 import ClearButton from "../components/ClearButton/ClearButton";
 import DataGauge from "../components/Gauge/Gauge";
-import Dropdown from "../components/Dropdown/Dropdown";
+import Drop from "../components/Dropdown/Dropdown";
 
 const Overview = () => {
   return (
@@ -14,10 +14,10 @@ const Overview = () => {
           marginBottom: "1rem",
         }}
       >
-        <Dropdown name="Environment" />
-        <Dropdown name="Action" />
-        <Dropdown name="Participant" />
-        <Dropdown name="Drill" />
+        <Drop name="Environment" />
+        <Drop name="Action" />
+        <Drop name="Participant" />
+        <Drop name="Drill" />
         <div
           style={{
             display: "flex",
