@@ -5,6 +5,7 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import { db } from "../../firebase";
 import "./Grid.css";
 import Modal from "react-modal";
+import { Button } from "react-bootstrap"
 
 class DataGrid extends Component {
   constructor() {
@@ -222,16 +223,8 @@ class DataGrid extends Component {
     };
     return (
       <div>
-        <button
-          style={{
-            padding: 20,
-            margin: 15,
-            backgroundColor: "rgba(73, 63, 252, 1)",
-          }}
-          onClick={() => this.onRemoveSelected()}
-        >
-          Remove Selected
-        </button>
+          <Button variant="primary" style={{marginLeft:"1rem", marginTop: "1rem", marginBottom: "1rem"}} onClick={() => this.onRemoveSelected()}>Remove Selected</Button>
+          
         <div className="ag-theme-alpine" style={{ height: 700, width: "100%" }}>
           <AgGridReact
             columnHoverHighlight={true}
