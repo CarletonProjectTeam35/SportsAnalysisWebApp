@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import Navbar from "./components/Navbar/Navbar";
+import NavbarCustom from "./components/Navbar/NavbarCustom";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Overview from "./pages/Overview";
 import Emg from "./pages/Emg";
@@ -25,7 +25,7 @@ function App() {
           {user ? (
             <Router>
               <div className="App">
-                <Navbar />
+                <NavbarCustom />
                 <div className="content">
                   <Routes>
                     <Route exact path="/" element={<Overview />}></Route>
